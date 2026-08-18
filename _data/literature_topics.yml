@@ -42,6 +42,10 @@
   label: 基于模型的强化学习
   description: 通过学习动力学模型进行想象训练、树搜索或模型预测控制
 
+- id: reinforcement-learning
+  label: 强化学习
+  description: 强化学习理论、策略优化、约束与风险、安全探索及离线学习
+
 - id: self-supervised-learning
   label: 自监督学习
   description: 从未标注图像、视频或交互轨迹中学习可迁移表征与预测模型

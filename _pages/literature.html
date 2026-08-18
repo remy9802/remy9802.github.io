@@ -64,7 +64,7 @@ author_profile: false
 
   {% if site.data.literature_metrics %}
     <p class="literature-metrics-note">
-      引用数采用 {{ site.data.literature_metrics.citation_source }} 快照（截至 {{ site.data.literature_metrics.citation_count_as_of }}）；动态指标仅用于排序参考，未核验条目始终置后。
+      引用数采用 {{ site.data.literature_metrics.citation_source }} 快照（截至 {{ site.data.literature_metrics.citation_count_as_of }}），当前覆盖 {{ site.data.literature_metrics.citation_count_coverage }} / {{ site.data.literature_metrics.paper_count }} 篇单篇精读；动态指标仅用于排序参考，未核验条目始终置后。
     </p>
   {% endif %}
 

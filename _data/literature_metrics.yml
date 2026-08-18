@@ -2,4 +2,260 @@
 # 引用数是动态数据库指标，不代表论文质量，也不等同于严格他引数。
 citation_source: "Semantic Scholar"
 citation_count_as_of: "2026-08-18"
-papers: {}
+paper_count: 52
+paper_year_coverage: 52
+citation_count_coverage: 49
+papers:
+  attention-is-all-you-need:
+    paper_year: 2017
+    citation_count: 189113
+    citation_source_id: "204e3073870fae3d05bcbc2f6a8e263d9b72e776"
+    citation_url: "https://www.semanticscholar.org/paper/204e3073870fae3d05bcbc2f6a8e263d9b72e776"
+  autoserl:
+    paper_year: 2026
+    citation_count: 0
+    citation_source_id: "63b555e18257ca8cd4e8774e8b14f74b7ea3d8a4"
+    citation_url: "https://www.semanticscholar.org/paper/63b555e18257ca8cd4e8774e8b14f74b7ea3d8a4"
+  autovla:
+    paper_year: 2025
+    citation_count: 242
+    citation_source_id: "989d24f3ab2c35b0698c42b800caab5246f6eb53"
+    citation_url: "https://www.semanticscholar.org/paper/989d24f3ab2c35b0698c42b800caab5246f6eb53"
+  blip:
+    paper_year: 2022
+    citation_count: 7185
+    citation_source_id: "a3b42a83669998f65df60d7c065a70d07ca95e99"
+    citation_url: "https://www.semanticscholar.org/paper/a3b42a83669998f65df60d7c065a70d07ca95e99"
+  blip2:
+    paper_year: 2023
+    citation_count: 8933
+    citation_source_id: "3f5b31c4f7350dc88002c121aecbdc82f86eb5bb"
+    citation_url: "https://www.semanticscholar.org/paper/3f5b31c4f7350dc88002c121aecbdc82f86eb5bb"
+  clip:
+    paper_year: 2021
+    citation_count: 54134
+    citation_source_id: "6f870f7f02a8c59c3e23f407f3ef00dd1dcf8fc4"
+    citation_url: "https://www.semanticscholar.org/paper/6f870f7f02a8c59c3e23f407f3ef00dd1dcf8fc4"
+  deepseek-llm:
+    paper_year: 2024
+    citation_count: 826
+    citation_source_id: "7260442ef9c0448f07ce3803efd49cebaffcebe9"
+    citation_url: "https://www.semanticscholar.org/paper/7260442ef9c0448f07ce3803efd49cebaffcebe9"
+  deepseek-r1:
+    paper_year: 2025
+    citation_count: 5538
+    citation_source_id: "2eed1fad9bbf887d4395de40f20144c4fafefd7f"
+    citation_url: "https://www.semanticscholar.org/paper/2eed1fad9bbf887d4395de40f20144c4fafefd7f"
+  deepseek-v2:
+    paper_year: 2024
+    citation_count: 1381
+    citation_source_id: "53a803388e83ae89261624099d7be4287ace67cb"
+    citation_url: "https://www.semanticscholar.org/paper/53a803388e83ae89261624099d7be4287ace67cb"
+  deepseek-v3:
+    paper_year: 2025
+    citation_count: 3892
+    citation_source_id: "5b6fdb2aea424d02c141da81d62b04d739d62b96"
+    citation_url: "https://www.semanticscholar.org/paper/5b6fdb2aea424d02c141da81d62b04d739d62b96"
+    citation_note: "Semantic Scholar 存在一个 citation_count 为 0 的重复记录；此处采用已汇聚 DBLP/arXiv 引文的规范记录。"
+  dit:
+    paper_year: 2023
+    citation_count: 6908
+    citation_source_id: "736973165f98105fec3729b7db414ae4d80fcbeb"
+    citation_url: "https://www.semanticscholar.org/paper/736973165f98105fec3729b7db414ae4d80fcbeb"
+  dreamzero:
+    paper_year: 2026
+    citation_count: 259
+    citation_source_id: "badf8adcf2b6a6780a308881de75f148a4cacea0"
+    citation_url: "https://www.semanticscholar.org/paper/badf8adcf2b6a6780a308881de75f148a4cacea0"
+  emma-autonomous-driving:
+    paper_year: 2025
+    citation_count: 226
+    citation_source_id: "4d9e66789ea1fe8930a482194a4ae36679506359"
+    citation_url: "https://www.semanticscholar.org/paper/4d9e66789ea1fe8930a482194a4ae36679506359"
+  fast-action-tokenizer:
+    paper_year: 2025
+    citation_count: 589
+    citation_source_id: "3880f5bad862ba1b18f4f8ec060038b326b118ed"
+    citation_url: "https://www.semanticscholar.org/paper/3880f5bad862ba1b18f4f8ec060038b326b118ed"
+  fast-wam:
+    paper_year: 2026
+    citation_count: 151
+    citation_source_id: "b5be12ccbb037be57a1dbc03fbd43d379170055f"
+    citation_url: "https://www.semanticscholar.org/paper/b5be12ccbb037be57a1dbc03fbd43d379170055f"
+  faster-wam:
+    paper_year: 2026
+    citation_count: 0
+    citation_source_id: "a7174cfe96b720a71bc9c67b30508777249002de"
+    citation_url: "https://www.semanticscholar.org/paper/a7174cfe96b720a71bc9c67b30508777249002de"
+  gpt-1-generative-pretraining:
+    paper_year: 2018
+    citation_count: 15201
+    citation_source_id: "cd18800a0fe0b668a1cc19f2ec95b5003d0a5035"
+    citation_url: "https://www.semanticscholar.org/paper/cd18800a0fe0b668a1cc19f2ec95b5003d0a5035"
+  gpt-2-unsupervised-multitask-learners:
+    paper_year: 2019
+    citation_count: 29812
+    citation_source_id: "9405cc0d6169988371b2755e573cc28650d14dfe"
+    citation_url: "https://www.semanticscholar.org/paper/9405cc0d6169988371b2755e573cc28650d14dfe"
+  gpt-3-few-shot-learners:
+    paper_year: 2020
+    citation_count: 62164
+    citation_source_id: "90abbc2cf38462b954ae1b772fac9532e2ccd8b0"
+    citation_url: "https://www.semanticscholar.org/paper/90abbc2cf38462b954ae1b772fac9532e2ccd8b0"
+  gpt-4-technical-report:
+    paper_year: 2023
+    citation_count: 26648
+    citation_source_id: "163b4d6a79a5b19af88b8585456363340d9efd04"
+    citation_url: "https://www.semanticscholar.org/paper/163b4d6a79a5b19af88b8585456363340d9efd04"
+  gpt-4o-system-card:
+    paper_year: 2024
+    citation_count: 4764
+    citation_source_id: "7943ec4a67151a559b25cd34369e661c9a7924c8"
+    citation_url: "https://www.semanticscholar.org/paper/7943ec4a67151a559b25cd34369e661c9a7924c8"
+  gpt-4v-system-card:
+    paper_year: 2023
+    citation_count: 521
+    citation_source_id: "7a29f47f6509011fe5b19462abf6607867b68373"
+    citation_url: "https://www.semanticscholar.org/paper/7a29f47f6509011fe5b19462abf6607867b68373"
+    citation_note: "Semantic Scholar 仅提供题名级记录，缺少作者、DOI 与 arXiv 外部标识。"
+  gr00t-n1:
+    paper_year: 2025
+    citation_count: 1183
+    citation_source_id: "731c50b0d6af4c1cb8d95f506541681ea487973b"
+    citation_url: "https://www.semanticscholar.org/paper/731c50b0d6af4c1cb8d95f506541681ea487973b"
+  gr00t-n17:
+    paper_year: 2026
+  hil-serl:
+    paper_year: 2025
+    citation_count: 209
+    citation_source_id: "8440692409f544c6eb3e4193fb391a1dc7e8be4d"
+    citation_url: "https://www.semanticscholar.org/paper/8440692409f544c6eb3e4193fb391a1dc7e8be4d"
+  instructgpt:
+    paper_year: 2022
+    citation_count: 23405
+    citation_source_id: "d766bffc357127e0dc86dd69561d5aeb520d6f4c"
+    citation_url: "https://www.semanticscholar.org/paper/d766bffc357127e0dc86dd69561d5aeb520d6f4c"
+  internvl:
+    paper_year: 2024
+    citation_count: 3259
+    citation_source_id: "6a33e58ef961a3a0a5657518b2be86395eb7c8d0"
+    citation_url: "https://www.semanticscholar.org/paper/6a33e58ef961a3a0a5657518b2be86395eb7c8d0"
+  llama-foundation-models:
+    paper_year: 2023
+    citation_count: 21250
+    citation_source_id: "57e849d0de13ed5f91d086936296721d4ff75a75"
+    citation_url: "https://www.semanticscholar.org/paper/57e849d0de13ed5f91d086936296721d4ff75a75"
+  llava-visual-instruction-tuning:
+    paper_year: 2023
+    citation_count: 10758
+    citation_source_id: "a5036f31f0e629dc661f120b8c3b1f374d479ab8"
+    citation_url: "https://www.semanticscholar.org/paper/a5036f31f0e629dc661f120b8c3b1f374d479ab8"
+  mm-dit:
+    paper_year: 2024
+    citation_count: 4534
+    citation_source_id: "41a66997ce0a366bba3becf7c3f37c9aebb13fbd"
+    citation_url: "https://www.semanticscholar.org/paper/41a66997ce0a366bba3becf7c3f37c9aebb13fbd"
+  opendrivevla:
+    paper_year: 2026
+    citation_count: 189
+    citation_source_id: "b357a791b8a1e97846b094679f5f8aab462081ab"
+    citation_url: "https://www.semanticscholar.org/paper/b357a791b8a1e97846b094679f5f8aab462081ab"
+  orion-autonomous-driving:
+    paper_year: 2025
+    citation_count: 186
+    citation_source_id: "fb80db450e5eda720b42570c8318191c4271d858"
+    citation_url: "https://www.semanticscholar.org/paper/fb80db450e5eda720b42570c8318191c4271d858"
+  pi0:
+    paper_year: 2025
+    citation_count: 2395
+    citation_source_id: "7e7e59d2e247d99954081080ddd5aae93d10b9e0"
+    citation_url: "https://www.semanticscholar.org/paper/7e7e59d2e247d99954081080ddd5aae93d10b9e0"
+  pi05:
+    paper_year: 2025
+    citation_count: 1570
+    citation_source_id: "1e2a82ef5e0325a26ca0344c4f8c256c52fae7ec"
+    citation_url: "https://www.semanticscholar.org/paper/1e2a82ef5e0325a26ca0344c4f8c256c52fae7ec"
+  pi06-model-card:
+    paper_year: 2025
+  pi07:
+    paper_year: 2026
+    citation_count: 103
+    citation_source_id: "51b4a73d753dac4be63d07b3d933da8f9418e483"
+    citation_url: "https://www.semanticscholar.org/paper/51b4a73d753dac4be63d07b3d933da8f9418e483"
+  pistar06-recap:
+    paper_year: 2025
+    citation_count: 263
+    citation_source_id: "319e005858f32a7b1eddb05a62b1652ca8ea4611"
+    citation_url: "https://www.semanticscholar.org/paper/319e005858f32a7b1eddb05a62b1652ca8ea4611"
+  qwen-technical-report:
+    paper_year: 2023
+    citation_count: 4212
+    citation_source_id: "5fc1a3a49e8f1d106118b69d1d6be3b6caa23da0"
+    citation_url: "https://www.semanticscholar.org/paper/5fc1a3a49e8f1d106118b69d1d6be3b6caa23da0"
+  qwen-vl:
+    paper_year: 2023
+    citation_count: 2358
+    citation_source_id: "fc6a2f7478f68adefd69e2071f27e38aa1647f2f"
+    citation_url: "https://www.semanticscholar.org/paper/fc6a2f7478f68adefd69e2071f27e38aa1647f2f"
+  qwen2-technical-report:
+    paper_year: 2024
+    citation_count: 2416
+    citation_source_id: "54fb839f621e3fe787437ab8ca5f37e7e4726bfe"
+    citation_url: "https://www.semanticscholar.org/paper/54fb839f621e3fe787437ab8ca5f37e7e4726bfe"
+  qwen2-vl:
+    paper_year: 2024
+    citation_count: 4776
+    citation_source_id: "a22b23b65cdbc0335b872ed7c7a7206c710f8997"
+    citation_url: "https://www.semanticscholar.org/paper/a22b23b65cdbc0335b872ed7c7a7206c710f8997"
+  qwen25-technical-report:
+    paper_year: 2025
+    citation_count: 4721
+    citation_source_id: "88aa6b1f37d1fd8e0a40499ce9bb87873f03aaa8"
+    citation_url: "https://www.semanticscholar.org/paper/88aa6b1f37d1fd8e0a40499ce9bb87873f03aaa8"
+  qwen3-technical-report:
+    paper_year: 2025
+    citation_count: 7276
+    citation_source_id: "d2d84d56f730f81d276a02b48d5d44db5bde0b4a"
+    citation_url: "https://www.semanticscholar.org/paper/d2d84d56f730f81d276a02b48d5d44db5bde0b4a"
+  qwen3-vl:
+    paper_year: 2025
+    citation_count: 1922
+    citation_source_id: "15538df854dd33351dfb5cefd7e8f3340c8936c3"
+    citation_url: "https://www.semanticscholar.org/paper/15538df854dd33351dfb5cefd7e8f3340c8936c3"
+  reasoning-vla:
+    paper_year: 2026
+    citation_count: 13
+    citation_source_id: "57e13cddb126197583c0bd74e794d8d3a361cde1"
+    citation_url: "https://www.semanticscholar.org/paper/57e13cddb126197583c0bd74e794d8d3a361cde1"
+  rl-token:
+    paper_year: 2026
+    citation_count: 27
+    citation_source_id: "951c78ccafa7eb56f8abfe356d1b79102788e6ff"
+    citation_url: "https://www.semanticscholar.org/paper/951c78ccafa7eb56f8abfe356d1b79102788e6ff"
+  siglip:
+    paper_year: 2023
+    citation_count: 3598
+    citation_source_id: "35aba190f28b5c39df333c06ca21f46bd4845eba"
+    citation_url: "https://www.semanticscholar.org/paper/35aba190f28b5c39df333c06ca21f46bd4845eba"
+  siglip2:
+    paper_year: 2025
+    citation_count: 1151
+    citation_source_id: "5bbb904e85ced452f44d9ed9559297334298c407"
+    citation_url: "https://www.semanticscholar.org/paper/5bbb904e85ced452f44d9ed9559297334298c407"
+  sonic-humanoid-whole-body-control:
+    paper_year: 2026
+  vit:
+    paper_year: 2021
+    citation_count: 68131
+    citation_source_id: "268d347e8a55b5eb82fb5e7d2f800e33c75ab18a"
+    citation_url: "https://www.semanticscholar.org/paper/268d347e8a55b5eb82fb5e7d2f800e33c75ab18a"
+  wcm-world-critic-model:
+    paper_year: 2026
+    citation_count: 0
+    citation_source_id: "6baeeb619be6041013d59387d1099f5653ec7ed9"
+    citation_url: "https://www.semanticscholar.org/paper/6baeeb619be6041013d59387d1099f5653ec7ed9"
+  x-mind:
+    paper_year: 2026
+    citation_count: 0
+    citation_source_id: "ac052a8aa52a8a7550660bcbd49325827d9e0752"
+    citation_url: "https://www.semanticscholar.org/paper/ac052a8aa52a8a7550660bcbd49325827d9e0752"
