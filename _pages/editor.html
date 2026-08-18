@@ -1,0 +1,96 @@
+---
+permalink: /editor/
+title: "写作工作台"
+excerpt: "在浏览器中写作、预览并导出适用于 Jekyll 博客的 Markdown 文章。"
+layout: editor
+author_profile: false
+sitemap: false
+---
+
+<div class="writing-studio" id="writing-studio">
+  <header class="writing-studio__hero">
+    <div>
+      <p class="writing-studio__eyebrow">BROWSER WRITING STUDIO</p>
+      <h1>在浏览器里，<br><span>把想法写成文章。</span></h1>
+      <p class="writing-studio__intro">专注 Markdown 写作，即时看到发布效果。草稿只保存在当前浏览器中，由你决定何时导出。</p>
+    </div>
+    <div class="writing-studio__privacy" aria-label="隐私说明">
+      <span class="writing-studio__privacy-icon" aria-hidden="true">●</span>
+      <span><strong>本地优先</strong><small>内容不会上传到服务器</small></span>
+    </div>
+  </header>
+
+  <section class="draft-meta" aria-label="文章信息">
+    <label class="draft-meta__title">
+      <span>文章标题</span>
+      <input id="draft-title" type="text" placeholder="给这篇文章一个清晰的标题" autocomplete="off">
+    </label>
+    <label>
+      <span>发布日期</span>
+      <input id="draft-date" type="date">
+    </label>
+    <label>
+      <span>标签 <small>用逗号分隔</small></span>
+      <input id="draft-tags" type="text" placeholder="学习, 随笔">
+    </label>
+  </section>
+
+  <div class="studio-tabs" role="tablist" aria-label="编辑视图">
+    <button type="button" class="studio-tab is-active" id="edit-tab" data-view="edit" role="tab" aria-selected="true" aria-controls="editor-pane">编辑</button>
+    <button type="button" class="studio-tab" id="preview-tab" data-view="preview" role="tab" aria-selected="false" aria-controls="preview-pane">预览</button>
+  </div>
+
+  <section class="studio-grid" aria-label="Markdown 编辑器与预览">
+    <div class="studio-pane studio-pane--editor is-active" id="editor-pane" role="tabpanel" aria-labelledby="edit-tab">
+      <div class="studio-pane__header">
+        <div>
+          <span class="studio-pane__dot" aria-hidden="true"></span>
+          <strong>Markdown</strong>
+        </div>
+        <span id="save-status" class="save-status" role="status">已保存</span>
+      </div>
+
+      <div class="format-toolbar" role="toolbar" aria-label="文字格式">
+        <button type="button" data-format="heading" aria-label="二级标题" title="二级标题">H2</button>
+        <button type="button" data-format="bold" aria-label="粗体" title="粗体"><strong>B</strong></button>
+        <button type="button" data-format="italic" aria-label="斜体" title="斜体"><em>I</em></button>
+        <button type="button" data-format="quote" aria-label="引用" title="引用">“</button>
+        <button type="button" data-format="link" aria-label="链接" title="链接">↗</button>
+        <button type="button" data-format="code" aria-label="行内代码" title="行内代码">&lt;/&gt;</button>
+        <button type="button" data-format="list" aria-label="无序列表" title="无序列表">☷</button>
+      </div>
+
+      <label class="sr-only" for="draft-body">文章正文</label>
+      <textarea id="draft-body" spellcheck="true" aria-describedby="editor-hint"></textarea>
+      <p class="studio-pane__hint" id="editor-hint"><span>支持标题、列表、引用、代码块与链接</span><span id="document-stats">0 字 · 约 1 分钟</span></p>
+    </div>
+
+    <div class="studio-pane studio-pane--preview" id="preview-pane" role="tabpanel" aria-labelledby="preview-tab">
+      <div class="studio-pane__header">
+        <div>
+          <span class="studio-pane__dot studio-pane__dot--preview" aria-hidden="true"></span>
+          <strong>发布预览</strong>
+        </div>
+        <span class="preview-badge">LIVE</span>
+      </div>
+      <article class="markdown-preview" id="markdown-preview" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <footer class="studio-actions">
+    <div class="studio-actions__secondary">
+      <button type="button" class="studio-button studio-button--ghost" id="new-draft">新建草稿</button>
+      <label class="studio-button studio-button--ghost studio-button--file" for="import-file">导入 .md</label>
+      <input class="sr-only" id="import-file" type="file" accept=".md,.markdown,text/markdown,text/plain">
+    </div>
+    <div class="studio-actions__primary">
+      <button type="button" class="studio-button studio-button--quiet" id="copy-markdown">复制 Markdown</button>
+      <button type="button" class="studio-button studio-button--primary" id="download-markdown">导出文章 <span aria-hidden="true">↓</span></button>
+    </div>
+  </footer>
+
+  <div class="studio-toast" id="studio-toast" role="status" aria-live="polite"></div>
+</div>
+
+<noscript><p class="notice--warning">写作工作台需要启用 JavaScript。</p></noscript>
+<script src="{{ base_path }}/assets/js/editor.js" defer></script>
