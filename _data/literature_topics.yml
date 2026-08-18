@@ -21,3 +21,7 @@
 - id: world-model
   label: 世界模型
   description: 环境动力学、生成式预测与规划模型
+
+- id: real-robot-rl
+  label: 真机强化学习
+  description: 在真实机器人硬件上进行在线强化学习、人工干预与自主经验改进
