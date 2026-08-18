@@ -13,7 +13,7 @@
 1. Check status by going to the repository settings, in the "GitHub pages" section
 1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
 
-See more info at https://academicpages.github.io/
+See more info at https://remy9802.github.io/
 
 ### Additional Tutorials
 
@@ -78,7 +78,7 @@ If you are using [Visual Studio Code](https://code.visualstudio.com/) you can us
 
 # Maintenance
 
-Bug reports and feature requests to the template should be [submitted via GitHub](https://github.com/academicpages/academicpages.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/academicpages/academicpages.github.io/discussions).
+Bug reports and feature requests to the template should be [submitted via GitHub](https://github.com/remy9802/remy9802.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/remy9802/remy9802.github.io/discussions).
 
 This repository was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License (see LICENSE.md). It is currently being maintained by [Robert Zupko](https://github.com/rjzupkoii), and additional maintainers would be welcome.
 
@@ -91,11 +91,11 @@ Unfortunately, one logistical issue with a template theme like Academic Pages th
 ---
 <div align="center">
     
-![pages-build-deployment](https://github.com/academicpages/academicpages.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)
-[![GitHub contributors](https://img.shields.io/github/contributors/academicpages/academicpages.github.io.svg)](https://github.com/academicpages/academicpages.github.io/graphs/contributors)
-[![GitHub release](https://img.shields.io/github/v/release/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io/releases/latest)
-[![GitHub license](https://img.shields.io/github/license/academicpages/academicpages.github.io?color=blue)](https://github.com/academicpages/academicpages.github.io/blob/master/LICENSE)
+![pages-build-deployment](https://github.com/remy9802/remy9802.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)
+[![GitHub contributors](https://img.shields.io/github/contributors/remy9802/remy9802.github.io.svg)](https://github.com/remy9802/remy9802.github.io/graphs/contributors)
+[![GitHub release](https://img.shields.io/github/v/release/remy9802/remy9802.github.io)](https://github.com/remy9802/remy9802.github.io/releases/latest)
+[![GitHub license](https://img.shields.io/github/license/remy9802/remy9802.github.io?color=blue)](https://github.com/remy9802/remy9802.github.io/blob/master/LICENSE)
 
-[![GitHub stars](https://img.shields.io/github/stars/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io)
-[![GitHub forks](https://img.shields.io/github/forks/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io/fork)
+[![GitHub stars](https://img.shields.io/github/stars/remy9802/remy9802.github.io)](https://github.com/remy9802/remy9802.github.io)
+[![GitHub forks](https://img.shields.io/github/forks/remy9802/remy9802.github.io)](https://github.com/remy9802/remy9802.github.io/fork)
 </div>

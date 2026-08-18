@@ -1,0 +1,290 @@
+{
+  "papers": [
+    {
+      "slug": "autovla",
+      "title": "AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning",
+      "authors_institutions": "Zewei Zhou、Tianhui Cai、Seth Z. Zhao、Yun Zhang、Zhiyu Huang、Bolei Zhou、Jiaqi Ma；University of California, Los Angeles",
+      "year": 2025,
+      "venue": "NeurIPS 2025",
+      "pages": 30,
+      "pdf_path": "/tmp/literature-vla-pdfs/autovla.pdf",
+      "text_path": "/tmp/literature-vla-pdfs/autovla.txt",
+      "source_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/2843fccca5bedd369a4764848b9bd546-Abstract-Conference.html",
+      "note_path": "_posts/2026-08-18-autovla.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "Recent advancements in Vision-Language-Action (VLA) models have shown promise for end-to-end autonomous driving by leveraging world knowledge and reasoning capabilities. However, current VLA models often struggle with physically infeasible action outputs, complex model structures, or unnecessarily long reasoning. In this paper, we propose AutoVLA, a novel VLA model that unifies reasoning and action generation within a single autoregressive generation model for end-to-end autonomous driving. AutoVLA performs semantic reasoning and trajectory planning directly from raw visual inputs and language instructions. We tokenize continuous trajectories into discrete, feasible actions, enabling direct integration into the language model. For training, we employ supervised fine-tuning to equip the model with dual thinking modes: fast thinking (trajectory-only) and slow thinking (enhanced with chain-of-thought reasoning). To further enhance planning performance and efficiency, we introduce a reinforcement fine-tuning method based on Group Relative Policy Optimization (GRPO), reducing unnecessary reasoning in straightforward scenarios. Extensive experiments across real-world and simulated datasets and benchmarks, including nuPlan, nuScenes, Waymo, and CARLA, demonstrate the competitive performance of AutoVLA in both open-loop and closed-loop settings. Qualitative results showcase the adaptive reasoning and accurate planning capabilities of AutoVLA in diverse scenarios.",
+      "lead_translation": "视觉-语言-动作（VLA）模型的最新进展表明，借助世界知识和推理能力，VLA 有望用于端到端自动驾驶。然而，现有 VLA 模型往往面临动作输出不符合物理可行性、模型结构复杂或推理过程不必要地冗长等问题。本文提出 AutoVLA：一种面向端到端自动驾驶、在单一自回归生成模型内统一推理与动作生成的新型 VLA。AutoVLA 直接根据原始视觉输入和语言指令完成语义推理与轨迹规划。作者把连续轨迹离散化为物理可行的动作 token，从而可直接集成进语言模型。训练阶段先通过监督微调获得两种思考模式：仅生成轨迹的快速思考，以及加入思维链推理的慢速思考；随后采用基于组相对策略优化（GRPO）的强化微调，在简单场景中减少不必要的推理，以提升规划性能和效率。覆盖 nuPlan、nuScenes、Waymo 与 CARLA 的真实及仿真数据集和基准实验表明，AutoVLA 在开环与闭环设置中均具有竞争力；定性结果进一步展示了它在多类场景下的自适应推理和准确规划能力。",
+      "glossary": [
+        {"term": "Vision-Language-Action (VLA)", "translation": "视觉-语言-动作模型", "note": "首次展开，后文保留 VLA"},
+        {"term": "action token", "translation": "动作 token", "note": "保留 token，不译为词元"},
+        {"term": "fast/slow thinking", "translation": "快速/慢速思考", "note": "对应 trajectory-only / chain-of-thought"},
+        {"term": "Group Relative Policy Optimization (GRPO)", "translation": "组相对策略优化", "note": "首次展开，后文保留 GRPO"}
+      ]
+    },
+    {
+      "slug": "emma-autonomous-driving",
+      "title": "EMMA: End-to-End Multimodal Model for Autonomous Driving",
+      "authors_institutions": "Jyh-Jing Hwang 等；Waymo LLC",
+      "year": 2025,
+      "venue": "Transactions on Machine Learning Research",
+      "pages": 31,
+      "pdf_path": "/tmp/literature-vla-pdfs/emma.pdf",
+      "text_path": "/tmp/literature-vla-pdfs/emma.txt",
+      "source_url": "https://openreview.net/pdf?id=kH3t5lmOU8",
+      "note_path": "_posts/2026-08-18-emma-autonomous-driving.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "We introduce EMMA, an End-to-end Multimodal Model for Autonomous driving. Built upon a multi-modal large language model foundation like Gemini, EMMA directly maps raw camera sensor data into various driving-specific outputs, including planner trajectories, perception objects, and road graph elements. EMMA maximizes the utility of world knowledge from the pre-trained large language models, by representing all non-sensor inputs (e.g. navigation instructions and ego vehicle status) and outputs (e.g. trajectories and 3D locations) as natural language text. This approach allows EMMA to jointly process various driving tasks in a unified language space, and generate the outputs for each task using task-specific prompts. Empirically, we demonstrate EMMA’s effectiveness by achieving state-of-the-art performance in motion planning on nuScenes as well as competitive results on the Waymo Open Motion Dataset (WOMD). EMMA also yields competitive results for camera-primary 3D object detection on the Waymo Open Dataset (WOD). We show that co-training EMMA with planner trajectories, object detection, and road graph tasks yields improvements across all three domains, highlighting EMMA’s potential as a generalist model for autonomous driving applications. We hope that our results will inspire research to further evolve the state of the art in autonomous driving model architectures.",
+      "lead_translation": "本文提出 EMMA，即端到端自动驾驶多模态模型。EMMA 构建在 Gemini 一类多模态大语言模型基础之上，直接把原始相机传感器数据映射为多种驾驶专用输出，包括规划轨迹、感知目标和道路图元素。为最大化利用预训练大语言模型中的世界知识，EMMA 将所有非传感器输入（如导航指令和自车状态）及输出（如轨迹和三维位置）统一表示为自然语言文本。这样，模型可以在统一语言空间中联合处理多类驾驶任务，并用任务专用提示生成相应输出。实验表明，EMMA 在 nuScenes 运动规划上达到当时最优表现，在 Waymo Open Motion Dataset（WOMD）上也取得有竞争力的结果；在 Waymo Open Dataset（WOD）的相机主导三维目标检测上同样具有竞争力。将规划轨迹、目标检测和道路图任务联合训练，可使三个领域同时受益，显示出 EMMA 作为通用自动驾驶模型的潜力。",
+      "glossary": [
+        {"term": "End-to-end Multimodal Model for Autonomous driving (EMMA)", "translation": "端到端自动驾驶多模态模型", "note": "保留模型名 EMMA"},
+        {"term": "ego vehicle status", "translation": "自车状态", "note": "不用主车状态"},
+        {"term": "road graph", "translation": "道路图", "note": "指道路拓扑元素"},
+        {"term": "language space", "translation": "语言空间", "note": "与数值动作空间区分"}
+      ]
+    },
+    {
+      "slug": "opendrivevla",
+      "title": "OpenDriveVLA: Towards End-to-End Autonomous Driving with Large Vision Language Action Model",
+      "authors_institutions": "Xingcheng Zhou、Xuyuan Han、Feng Yang、Yunpu Ma、Volker Tresp、Alois Knoll；TUM、LMU Munich",
+      "year": 2026,
+      "venue": "AAAI 2026",
+      "pages": 9,
+      "pdf_path": "/tmp/literature-vla-pdfs/opendrivevla.pdf",
+      "text_path": "/tmp/literature-vla-pdfs/opendrivevla.txt",
+      "source_url": "https://ojs.aaai.org/index.php/AAAI/article/view/38386",
+      "note_path": "_posts/2026-08-18-opendrivevla.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "We present OpenDriveVLA, a Vision-Language Action (VLA) model designed for end-to-end autonomous driving, built upon open-source large language models. OpenDriveVLA generates spatially-grounded driving actions by leveraging multimodal inputs, including both 2D and 3D instance-aware visual representations, ego vehicle states, and language commands. To bridge the modality gap between driving visual representations and language embeddings, we introduce a hierarchical vision-language alignment process, projecting both 2D and 3D structured visual tokens into a unified semantic space. Furthermore, we incorporate structured agent–environment–ego interaction modeling into the autoregressive decoding process, enabling the model to capture fine-grained spatial dependencies and behavior-aware dynamics critical for reliable trajectory planning. Extensive experiments on the nuScenes dataset demonstrate that OpenDriveVLA achieves state-of-the-art results across open-loop trajectory planning and driving-related question-answering tasks. Qualitative analyses further illustrate its superior capability to follow high-level driving commands and generate trajectories under challenging scenarios, highlighting its potential for next-generation end-to-end autonomous driving.",
+      "lead_translation": "本文提出 OpenDriveVLA：一个建立在开源大语言模型之上的端到端自动驾驶视觉-语言-动作（VLA）模型。OpenDriveVLA 利用二维和三维实例感知视觉表示、自车状态及语言命令等多模态输入，生成具有空间接地的驾驶动作。为弥合驾驶视觉表示与语言嵌入之间的模态差距，作者设计了分层视觉-语言对齐流程，将二维和三维结构化视觉 token 投影到统一语义空间。此外，模型把结构化的智能体-环境-自车交互建模融入自回归解码，使其能够捕捉可靠轨迹规划所需的细粒度空间依赖和行为感知动力学。nuScenes 上的大量实验显示，OpenDriveVLA 在开环轨迹规划及驾驶问答任务上取得当时最优结果；定性分析还表明，它能在挑战性场景中遵循高层驾驶指令并生成轨迹。",
+      "glossary": [
+        {"term": "spatially-grounded", "translation": "空间接地的", "note": "指输出与三维场景实体和位置对应"},
+        {"term": "instance-aware", "translation": "实例感知", "note": "与 instance-agnostic 区分"},
+        {"term": "agent-environment-ego interaction", "translation": "智能体-环境-自车交互", "note": "三元交互保持连字符结构"},
+        {"term": "open-loop planning", "translation": "开环规划", "note": "与闭环评测区分"}
+      ]
+    },
+    {
+      "slug": "orion-autonomous-driving",
+      "title": "ORION: A Holistic End-to-End Autonomous Driving Framework by Vision-Language Instructed Action Generation",
+      "authors_institutions": "Haoyu Fu 等；华中科技大学、Xiaomi EV",
+      "year": 2025,
+      "venue": "ICCV 2025",
+      "pages": 12,
+      "pdf_path": "/tmp/literature-vla-pdfs/orion.pdf",
+      "text_path": "/tmp/literature-vla-pdfs/orion.txt",
+      "source_url": "https://openaccess.thecvf.com/content/ICCV2025/html/Fu_ORION_A_Holistic_End-to-End_Autonomous_Driving_Framework_by_Vision-Language_Instructed_ICCV_2025_paper.html",
+      "note_path": "_posts/2026-08-18-orion-autonomous-driving.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "End-to-end (E2E) autonomous driving methods still struggle to make correct decisions in interactive closed-loop evaluation due to limited causal reasoning capability. Current methods attempt to leverage the powerful understanding and reasoning abilities of Vision-Language Models (VLMs) to resolve this dilemma. However, the problem is still open that few VLMs for E2E methods perform well in the closed-loop evaluation due to the gap between the semantic reasoning space and the purely numerical trajectory output in the action space. To tackle this issue, we propose ORION, a hOlistic E2E autonomous dRiving framework by vIsion-language instructed actiON generation. ORION uniquely combines a QT-Former to aggregate long-term history context, a Large Language Model (LLM) for driving scenario reasoning, and a generative planner for precision trajectory prediction. ORION further aligns the reasoning space and the action space to implement a unified E2E optimization for both visual question-answering (VQA) and planning tasks. Our method achieves an impressive closed-loop performance of 77.74 Driving Score (DS) and 54.62% Success Rate (SR) on the challenge Bench2Drive datasets, which outperforms state-of-the-art (SOTA) methods by a large margin of 14.28 DS and 19.61% SR.",
+      "lead_translation": "由于因果推理能力有限，端到端（E2E）自动驾驶方法在交互式闭环评测中仍难以持续作出正确决策。已有研究尝试借助视觉语言模型（VLM）的理解与推理能力解决这一问题，但语义推理空间与动作空间中的纯数值轨迹输出之间存在鸿沟，因此很少有面向 E2E 驾驶的 VLM 能在闭环评测中表现良好。为此，作者提出 ORION，即通过视觉-语言指令动作生成构建的整体式端到端自动驾驶框架。ORION 结合了用于聚合长期历史上下文的 QT-Former、用于驾驶场景推理的大语言模型，以及用于精确轨迹预测的生成式规划器，并进一步对齐推理空间与动作空间，对视觉问答和规划任务进行统一端到端优化。在 Bench2Drive 挑战集上，ORION 获得 77.74 的驾驶得分和 54.62% 的成功率，相比当时最优方法分别提高 14.28 分和 19.61 个百分点。",
+      "glossary": [
+        {"term": "reasoning space", "translation": "推理空间", "note": "与 action space 成对使用"},
+        {"term": "action space", "translation": "动作空间", "note": "指连续数值轨迹域"},
+        {"term": "generative planner", "translation": "生成式规划器", "note": "保留 planner 的规划含义"},
+        {"term": "Bench2Drive", "translation": "Bench2Drive", "note": "基准名称不翻译"}
+      ]
+    },
+    {
+      "slug": "reasoning-vla",
+      "title": "Reasoning-VLA: A Fast and General Vision-Language-Action Reasoning Model for Autonomous Driving",
+      "authors_institutions": "Dapeng Zhang、Zhenlong Yuan、Zhangquan Chen、Chih-Ting Liao、Yinda Chen、Fei Shen、Qingguo Zhou、Tat-Seng Chua；Lanzhou University、National University of Singapore、University of Science and Technology of China、Tsinghua University、University of New South Wales",
+      "year": 2025,
+      "venue": "arXiv v1；OpenReview 后续版本使用修订标题",
+      "pages": 17,
+      "pdf_path": "/tmp/literature-vla-pdfs/reasoning-vla.pdf",
+      "text_path": "/tmp/literature-vla-pdfs/reasoning-vla.txt",
+      "source_url": "https://arxiv.org/abs/2511.19912",
+      "note_path": "_posts/2026-08-18-reasoning-vla.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "Vision-Language-Action (VLA) models have recently shown strong decision-making capabilities in autonomous driving. However, existing VLAs often struggle with achieving efficient inference and generalizing to novel autonomous vehicle configurations and driving scenarios. In this paper, we propose Reasoning-VLA, a general and fast action-generation VLA framework. The proposed model employs a set of learnable action queries, initialized via Gaussian sampling from ground-truth trajectories within the training corpus. These learnable queries interact with reasoning-enhanced vision-language features to generate continuous action trajectories in parallel. To promote robust generalization, we consolidate eight publicly available autonomous driving datasets into a standardized, Chain-of-Thought reasoning-based, and easy-to-use data format for model training. Leveraging both supervised learning and reinforcement learning fine-tuning, extensive empirical evaluations across multiple benchmarks demonstrate that Reasoning-VLA achieves state-of-the-art performance, superior generalization capability, and the excellent inference speed reported to date.",
+      "lead_translation": "视觉-语言-动作（VLA）模型近期在自动驾驶决策中展现出较强能力，但现有 VLA 往往难以同时实现高效推理，并泛化到新的自动驾驶车辆配置和驾驶场景。本文提出 Reasoning-VLA，一个通用且快速的动作生成 VLA 框架。模型采用一组可学习动作查询，这些查询由训练语料中的真实轨迹进行高斯采样初始化；查询与经推理增强的视觉-语言特征交互，以并行方式生成连续动作轨迹。为提升稳健泛化，作者整合八个公开自动驾驶数据集，统一为基于思维链推理且易于使用的训练格式。通过监督学习和强化学习微调，多项基准上的大量实验表明，Reasoning-VLA 达到当时最优性能，具备更强泛化能力，并实现了论文所报告的优异推理速度。",
+      "glossary": [
+        {"term": "learnable action queries", "translation": "可学习动作查询", "note": "query 译为查询，保留模块语义"},
+        {"term": "parallel action generation", "translation": "并行动作生成", "note": "与自回归动作解码区分"},
+        {"term": "spatially-guided reasoning", "translation": "空间引导推理", "note": "标题核心术语"},
+        {"term": "generalization", "translation": "泛化", "note": "涉及跨车辆与跨场景"}
+      ]
+    },
+    {
+      "slug": "qwen-vl",
+      "title": "Qwen-VL: A Versatile Vision-Language Model for Understanding, Localization, Text Reading, and Beyond",
+      "authors_institutions": "Jinze Bai 等；Alibaba Cloud",
+      "year": 2023,
+      "venue": "arXiv preprint",
+      "pages": 24,
+      "pdf_path": "/tmp/literature-vlm-pdfs/qwen-vl.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/qwen-vl.txt",
+      "source_url": "https://arxiv.org/abs/2308.12966",
+      "note_path": "_posts/2026-08-18-qwen-vl.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "In this work, we introduce the Qwen-VL series, a set of large-scale vision-language models (LVLMs) designed to perceive and understand both texts and images. Starting from the Qwen-LM as a foundation, we endow it with visual capacity by the meticulously designed (i) visual receptor, (ii) input-output interface, (iii) 3-stage training pipeline, and (iv) multilingual multimodal cleaned corpus. Beyond the conventional image description and question-answering, we implement the grounding and text-reading ability of Qwen-VLs by aligning image-caption-box tuples. The resulting models, including Qwen-VL and Qwen-VL-Chat, set new records for generalist models under similar model scales on a broad range of visual-centric benchmarks (e.g., image captioning, question answering, visual grounding) and different settings (e.g., zero-shot, few-shot). Moreover, on real-world dialog benchmarks, our instruction-tuned Qwen-VL-Chat also demonstrates superiority compared to existing vision-language chatbots. All models are public to facilitate future research.",
+      "lead_translation": "本文提出 Qwen-VL 系列，一组用于感知并理解文本和图像的大规模视觉语言模型（LVLM）。该系列以 Qwen-LM 为基础，通过精心设计的视觉接收器、输入输出接口、三阶段训练流程，以及清洗后的多语言多模态语料获得视觉能力。除常规图像描述和问答外，Qwen-VL 还通过对齐图像-描述-边界框三元组实现视觉接地与文字读取能力。Qwen-VL 和 Qwen-VL-Chat 在相近模型规模下，于图像描述、问答、视觉接地等多类视觉基准及零样本、少样本设置中刷新了通用模型记录；经过指令微调的 Qwen-VL-Chat 在真实对话基准上也优于当时已有视觉语言聊天机器人。作者公开了全部模型以促进后续研究。",
+      "glossary": [
+        {"term": "Large Vision-Language Model (LVLM)", "translation": "大型视觉语言模型", "note": "首次展开，后文保留 LVLM"},
+        {"term": "visual grounding", "translation": "视觉接地", "note": "指文本与图像区域定位对齐"},
+        {"term": "image-caption-box tuple", "translation": "图像-描述-边界框三元组", "note": "保持三元组结构"},
+        {"term": "text reading", "translation": "文字读取", "note": "涵盖 OCR 相关能力"}
+      ]
+    },
+    {
+      "slug": "qwen2-vl",
+      "title": "Qwen2-VL: Enhancing Vision-Language Model's Perception of the World at Any Resolution",
+      "authors_institutions": "Qwen Team；Alibaba Cloud",
+      "year": 2024,
+      "venue": "arXiv preprint",
+      "pages": 52,
+      "pdf_path": "/tmp/literature-vlm-pdfs/qwen2-vl.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/qwen2-vl.txt",
+      "source_url": "https://arxiv.org/abs/2409.12191",
+      "note_path": "_posts/2026-08-18-qwen2-vl.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "We present the Qwen2-VL Series, an advanced upgrade of the previous Qwen-VL models that redefines the conventional predetermined-resolution approach in visual processing. Qwen2-VL introduces the Naive Dynamic Resolution mechanism, which enables the model to dynamically process images of varying resolutions into different numbers of visual tokens. This approach allows the model to generate more efficient and accurate visual representations, closely aligning with human perceptual processes. The model also integrates Multimodal Rotary Position Embedding (M-RoPE), facilitating the effective fusion of positional information across text, images, and videos. We employ a unified paradigm for processing both images and videos, enhancing the model’s visual perception capabilities. To explore the potential of large multimodal models, Qwen2-VL investigates the scaling laws for large vision-language models (LVLMs). By scaling both the model size—with versions at 2B, 8B, and 72B parameters—and the amount of training data, the Qwen2-VL Series achieves highly competitive performance. Notably, the Qwen2-VL-72B model achieves results comparable to leading models such as GPT-4o and Claude 3.5 Sonnet across various multimodal benchmarks, outperforming other generalist models.",
+      "lead_translation": "本文提出 Qwen2-VL 系列，它是对 Qwen-VL 的重要升级，重新定义了视觉处理中预先固定分辨率的传统做法。Qwen2-VL 引入朴素动态分辨率机制，可将不同分辨率的图像动态处理成数量不同的视觉 token，从而产生更高效、准确且更贴近人类感知过程的视觉表示。模型还整合多模态旋转位置编码（M-RoPE），以有效融合文本、图像和视频中的位置信息，并使用统一范式处理图像与视频。为探索大型多模态模型的潜力，Qwen2-VL 研究了大型视觉语言模型的扩展规律；通过同时扩大模型规模（2B、8B、72B）和训练数据量，系列模型取得了很有竞争力的性能。论文报告称，Qwen2-VL-72B 在多项多模态基准上达到与 GPT-4o、Claude 3.5 Sonnet 等领先模型相当的结果，并优于其他通用模型。",
+      "glossary": [
+        {"term": "Naive Dynamic Resolution", "translation": "朴素动态分辨率", "note": "保留论文专名大小写"},
+        {"term": "Multimodal Rotary Position Embedding (M-RoPE)", "translation": "多模态旋转位置编码", "note": "首次展开，后文保留 M-RoPE"},
+        {"term": "visual token", "translation": "视觉 token", "note": "不译为视觉词元"},
+        {"term": "scaling law", "translation": "扩展规律", "note": "避免误写成一般比例关系"}
+      ]
+    },
+    {
+      "slug": "qwen3-vl",
+      "title": "Qwen3-VL Technical Report",
+      "authors_institutions": "Qwen Team；Alibaba Cloud",
+      "year": 2025,
+      "venue": "arXiv technical report",
+      "pages": 42,
+      "pdf_path": "/tmp/literature-vlm-pdfs/qwen3-vl.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/qwen3-vl.txt",
+      "source_url": "https://arxiv.org/abs/2511.21631",
+      "note_path": "_posts/2026-08-18-qwen3-vl.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "We introduce Qwen3-VL, the most capable vision-language model in the Qwen series to date, achieving superior performance across a broad range of multimodal benchmarks. It natively supports interleaved contexts of up to 256K tokens, seamlessly integrating text, images, and video. The model family includes both dense (2B/4B/8B/32B) and mixture-of-experts (30B-A3B/235B-A22B) variants to accommodate diverse latency-quality trade-offs. Qwen3-VL delivers three core pillars: markedly stronger pure-text understanding; robust long-context comprehension with a native 256K-token window for both text and interleaved multimodal inputs; and advanced multimodal reasoning across single-image, multi-image, and video tasks. Architecturally, we introduce three key upgrades: an enhanced interleaved-MRoPE for stronger spatial-temporal modeling across images and video; DeepStack integration, which effectively leverages multi-level ViT features to tighten vision-language alignment; and text-based time alignment for video, evolving from T-RoPE to explicit textual timestamp alignment for more precise temporal grounding. We extend pretraining to a context length of 256K tokens and bifurcate post-training into non-thinking and thinking variants to address distinct application requirements.",
+      "lead_translation": "本文提出 Qwen3-VL，即截至报告发布时 Qwen 系列能力最强的视觉语言模型，并报告其在广泛多模态基准上的领先表现。模型原生支持最长 256K token 的交错上下文，可无缝整合文本、图像和视频；模型家族同时包含稠密版本（2B/4B/8B/32B）和混合专家版本（30B-A3B/235B-A22B），以覆盖不同的延迟-质量权衡。Qwen3-VL 的三项核心能力是：显著增强的纯文本理解；对文本及交错多模态输入都适用的原生 256K 长上下文理解；以及面向单图、多图和视频任务的高级多模态推理。架构上有三项主要升级：增强型 interleaved-MRoPE，用于更强的图像与视频时空建模；DeepStack，通过利用多层 ViT 特征加强视觉语言对齐；以及基于文本的视频时间对齐，即从 T-RoPE 演进为显式文本时间戳对齐，以提高时间接地精度。预训练上下文长度扩展至 256K，后训练则区分为非思考和思考版本，以满足不同应用需求。",
+      "glossary": [
+        {"term": "interleaved context", "translation": "交错上下文", "note": "文本、图像、视频交替出现"},
+        {"term": "Mixture-of-Experts (MoE)", "translation": "混合专家模型", "note": "首次展开，后文保留 MoE"},
+        {"term": "DeepStack", "translation": "DeepStack", "note": "模块专名不翻译"},
+        {"term": "temporal grounding", "translation": "时间接地", "note": "指事件与时间位置对齐"}
+      ]
+    },
+    {
+      "slug": "llava-visual-instruction-tuning",
+      "title": "Visual Instruction Tuning",
+      "authors_institutions": "Haotian Liu、Chunyuan Li、Qingyang Wu、Yong Jae Lee；UW-Madison、Microsoft Research、Columbia University",
+      "year": 2023,
+      "venue": "NeurIPS 2023",
+      "pages": 25,
+      "pdf_path": "/tmp/literature-vlm-pdfs/llava.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/llava.txt",
+      "source_url": "https://proceedings.neurips.cc/paper_files/paper/2023/hash/6dcf277ea32ce3288914faf369fe6de0-Abstract-Conference.html",
+      "note_path": "_posts/2026-08-18-llava-visual-instruction-tuning.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "Instruction tuning large language models (LLMs) using machine-generated instruction-following data has been shown to improve zero-shot capabilities on new tasks, but the idea is less explored in the multimodal field. We present the first attempt to use language-only GPT-4 to generate multimodal language-image instruction-following data. By instruction tuning on such generated data, we introduce LLaVA: Large Language and Vision Assistant, an end-to-end trained large multimodal model that connects a vision encoder and an LLM for general-purpose visual and language understanding. To facilitate future research on visual instruction following, we construct two evaluation benchmarks with diverse and challenging application-oriented tasks. Our experiments show that LLaVA demonstrates impressive multimodal chat abilities, sometimes exhibiting the behaviors of multimodal GPT-4 on unseen images/instructions, and yields a 85.1% relative score compared with GPT-4 on a synthetic multimodal instruction-following dataset. When fine-tuned on Science QA, the synergy of LLaVA and GPT-4 achieves a new state-of-the-art accuracy of 92.53%. We make GPT-4 generated visual instruction tuning data, our model, and code publicly available.",
+      "lead_translation": "使用机器生成的指令跟随数据对大语言模型进行指令微调，已被证明能够提升模型在新任务上的零样本能力，但这一思想在多模态领域仍较少探索。本文首次尝试使用仅具语言能力的 GPT-4 生成多模态语言-图像指令跟随数据，并在这些数据上进行指令微调，提出 LLaVA（Large Language and Vision Assistant）：一个端到端训练、连接视觉编码器与大语言模型、面向通用视觉和语言理解的大型多模态模型。为推动视觉指令跟随研究，作者构建了两个包含多样且具挑战性的应用任务的评测基准。实验显示，LLaVA 具有显著的多模态对话能力，在未见图像和指令上有时呈现类似多模态 GPT-4 的行为；在合成多模态指令跟随数据集上，其相对 GPT-4 得分为 85.1%。在 ScienceQA 上微调后，LLaVA 与 GPT-4 协同达到 92.53% 的当时最优准确率。作者公开了 GPT-4 生成的视觉指令微调数据、模型和代码。",
+      "glossary": [
+        {"term": "visual instruction tuning", "translation": "视觉指令微调", "note": "论文核心概念"},
+        {"term": "Large Language and Vision Assistant (LLaVA)", "translation": "大型语言与视觉助手", "note": "保留模型名 LLaVA"},
+        {"term": "instruction-following data", "translation": "指令跟随数据", "note": "统一用跟随，不用遵循"},
+        {"term": "zero-shot", "translation": "零样本", "note": "与 few-shot 少样本区分"}
+      ]
+    },
+    {
+      "slug": "internvl",
+      "title": "InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks",
+      "authors_institutions": "Zhe Chen 等；OpenGVLab、上海人工智能实验室及合作高校/机构",
+      "year": 2024,
+      "venue": "CVPR 2024",
+      "pages": 14,
+      "pdf_path": "/tmp/literature-vlm-pdfs/internvl.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/internvl.txt",
+      "source_url": "https://openaccess.thecvf.com/content/CVPR2024/html/Chen_InternVL_Scaling_up_Vision_Foundation_Models_and_Aligning_for_Generic_CVPR_2024_paper.html",
+      "note_path": "_posts/2026-08-18-internvl.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "The exponential growth of large language models (LLMs) has opened up numerous possibilities for multi-modal AGI systems. However, the progress in vision and vision-language foundation models, which are also critical elements of multi-modal AGI, has not kept pace with LLMs. In this work, we design a large-scale vision-language foundation model (InternVL), which scales up the vision foundation model to 6 billion parameters and progressively aligns it with the LLM, using web-scale image-text data from various sources. This model can be broadly applied to and achieve state-of-the-art performance on 32 generic visual-linguistic benchmarks including visual perception tasks such as image-level or pixel-level recognition, vision-language tasks such as zero-shot image/video classification, zero-shot image/video-text retrieval, and link with LLMs to create multi-modal dialogue systems. It has powerful visual capabilities and can be a good alternative to the ViT-22B. We hope that our research could contribute to the development of multi-modal large models.",
+      "lead_translation": "大语言模型（LLM）的快速扩展为多模态通用人工智能系统带来了许多可能，但同样是多模态 AGI 关键组成部分的视觉基础模型和视觉语言基础模型，其发展速度并未跟上 LLM。本文设计大型视觉语言基础模型 InternVL：把视觉基础模型扩展到 60 亿参数，并使用来自多种来源的网络规模图文数据，逐步将其与 LLM 对齐。该模型可广泛用于 32 个通用视觉语言基准，并报告当时最优表现；任务涵盖图像级或像素级识别等视觉感知任务、零样本图像/视频分类、零样本图像/视频-文本检索等视觉语言任务，以及与 LLM 连接形成多模态对话系统。论文认为 InternVL 具备较强视觉能力，可作为 ViT-22B 的替代方案，并希望推动多模态大模型的发展。",
+      "glossary": [
+        {"term": "vision foundation model", "translation": "视觉基础模型", "note": "与 vision-language foundation model 区分"},
+        {"term": "progressive alignment", "translation": "渐进式对齐", "note": "对应三阶段训练路线"},
+        {"term": "InternViT-6B", "translation": "InternViT-6B", "note": "视觉编码器专名不翻译"},
+        {"term": "generic visual-linguistic task", "translation": "通用视觉语言任务", "note": "覆盖表征与生成任务"}
+      ]
+    },
+    {
+      "slug": "gpt-4-technical-report",
+      "title": "GPT-4 Technical Report",
+      "authors_institutions": "OpenAI；OpenAI",
+      "year": 2023,
+      "venue": "Technical report / arXiv v6 (2024)",
+      "pages": 100,
+      "pdf_path": "/tmp/literature-vlm-pdfs/gpt4-technical-report.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/gpt4-technical-report.txt",
+      "source_url": "https://arxiv.org/abs/2303.08774",
+      "note_path": "_posts/2026-08-18-gpt-4-technical-report.md",
+      "lead_label": "Abstract",
+      "lead_page": 1,
+      "lead_original": "We report the development of GPT-4, a large-scale, multimodal model which can accept image and text inputs and produce text outputs. While less capable than humans in many real-world scenarios, GPT-4 exhibits human-level performance on various professional and academic benchmarks, including passing a simulated bar exam with a score around the top 10% of test takers. GPT-4 is a Transformer-based model pre-trained to predict the next token in a document. The post-training alignment process results in improved performance on measures of factuality and adherence to desired behavior. A core component of this project was developing infrastructure and optimization methods that behave predictably across a wide range of scales. This allowed us to accurately predict some aspects of GPT-4’s performance based on models trained with no more than 1/1,000th the compute of GPT-4.",
+      "lead_translation": "本文报告 GPT-4 的开发。GPT-4 是一种大规模多模态模型，可接收图像和文本输入并生成文本输出。尽管它在许多真实场景中的能力仍低于人类，但在多项专业和学术基准上表现出人类水平的成绩，例如在模拟律师资格考试中位于考生前约 10%。GPT-4 是基于 Transformer 的模型，通过预测文档中的下一个 token 进行预训练；后训练对齐提高了模型在事实性和遵循期望行为方面的表现。项目的一项核心工作，是开发能够在广泛规模范围内呈现可预测行为的基础设施与优化方法，因此研究团队得以根据计算量不超过 GPT-4 千分之一的小模型，准确预测 GPT-4 的部分性能。",
+      "glossary": [
+        {"term": "multimodal model", "translation": "多模态模型", "note": "报告中的视觉输入披露有限"},
+        {"term": "predictable scaling", "translation": "可预测扩展", "note": "指跨训练规模预测损失和能力"},
+        {"term": "post-training alignment", "translation": "后训练对齐", "note": "包括 RLHF 等过程"},
+        {"term": "hallucination", "translation": "幻觉", "note": "指不可靠或无依据输出"}
+      ]
+    },
+    {
+      "slug": "gpt-4v-system-card",
+      "title": "GPT-4V(ision) System Card",
+      "authors_institutions": "OpenAI；OpenAI",
+      "year": 2023,
+      "venue": "System card",
+      "pages": 18,
+      "pdf_path": "/tmp/literature-vlm-pdfs/gpt4v-system-card.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/gpt4v-system-card.txt",
+      "source_url": "https://openai.com/index/gpt-4v-system-card/",
+      "note_path": "_posts/2026-08-18-gpt-4v-system-card.md",
+      "lead_label": "Introduction opening",
+      "lead_page": 1,
+      "lead_original": "GPT-4 with vision (GPT-4V) enables users to instruct GPT-4 to analyze image inputs provided by the user, and is the latest capability we are making broadly available. Incorporating additional modalities (such as image inputs) into large language models (LLMs) is viewed by some as a key frontier in artificial intelligence research and development. Multimodal LLMs offer the possibility of expanding the impact of language-only systems with novel interfaces and capabilities, enabling them to solve new tasks and provide novel experiences for their users.",
+      "lead_translation": "具备视觉能力的 GPT-4（GPT-4V）允许用户指示 GPT-4 分析其提供的图像输入，是 OpenAI 当时最新面向广泛用户开放的能力。一些研究者把向大语言模型引入图像等额外模态视为人工智能研发的重要前沿。多模态大语言模型有望通过新的交互界面和能力扩展纯语言系统的影响范围，使其能够解决新任务并为用户提供新的使用体验。",
+      "glossary": [
+        {"term": "GPT-4 with vision (GPT-4V)", "translation": "具备视觉能力的 GPT-4", "note": "后文保留 GPT-4V"},
+        {"term": "system card", "translation": "系统卡", "note": "部署安全材料，不等同架构论文"},
+        {"term": "ungrounded inference", "translation": "无依据推断", "note": "指不能由用户提供信息支持的推断"},
+        {"term": "red teaming", "translation": "红队测试", "note": "保留安全评测语义"}
+      ]
+    },
+    {
+      "slug": "gpt-4o-system-card",
+      "title": "GPT-4o System Card",
+      "authors_institutions": "OpenAI；OpenAI",
+      "year": 2024,
+      "venue": "System card",
+      "pages": 33,
+      "pdf_path": "/tmp/literature-vlm-pdfs/gpt4o-system-card.pdf",
+      "text_path": "/tmp/literature-vlm-pdfs/gpt4o-system-card.txt",
+      "source_url": "https://openai.com/index/gpt-4o-system-card/",
+      "note_path": "_posts/2026-08-18-gpt-4o-system-card.md",
+      "lead_label": "Introduction opening",
+      "lead_page": 1,
+      "lead_original": "GPT-4o is an autoregressive omni model, which accepts as input any combination of text, audio, image, and video and generates any combination of text, audio, and image outputs. It’s trained end-to-end across text, vision, and audio, meaning that all inputs and outputs are processed by the same neural network.",
+      "lead_translation": "GPT-4o 是一种自回归全模态模型，可接收文本、音频、图像和视频的任意组合，并生成文本、音频和图像的任意组合输出。它在文本、视觉和音频上进行端到端训练，也就是说，所有输入与输出均由同一个神经网络处理。",
+      "glossary": [
+        {"term": "omni model", "translation": "全模态模型", "note": "保留其统一网络含义"},
+        {"term": "speech-to-speech", "translation": "语音到语音", "note": "强调端到端音频交互"},
+        {"term": "Preparedness Framework", "translation": "Preparedness Framework", "note": "官方框架名保留英文"},
+        {"term": "voice cloning", "translation": "声音克隆", "note": "与未经授权声音生成风险相关"}
+      ]
+    }
+  ]
+}

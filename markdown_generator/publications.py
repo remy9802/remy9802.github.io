@@ -1,15 +1,15 @@
 # Publications markdown generator for AcademicPages
-# 
-# Takes a TSV / CSV of publications with metadata and converts them for use with [academicpages.github.io](academicpages.github.io). 
+#
+# Takes a TSV / CSV of publications with metadata and converts them for use with [remy9802.github.io](https://remy9802.github.io).
 # Can be called via the command prompt by using `python3 publications.py [filename]`.
 
 # Data format
-# 
+#
 # The file needs to have the following columns as a header at the top:
 # pub_date, title, venue, excerpt, citation, url_slug, paper_url, slides_url
-# - `excerpt`, `paper_url`, and slides_url can be blank, but the others must have values. 
+# - `excerpt`, `paper_url`, and slides_url can be blank, but the others must have values.
 # - `pub_date` must be formatted as YYYY-MM-DD.
-# - `url_slug` will be the descriptive part of the .md file and the permalink URL for the page about the paper. 
+# - `url_slug` will be the descriptive part of the .md file and the permalink URL for the page about the paper.
 #    The .md file will be `YYYY-MM-DD-[url_slug].md` and the permalink will be `https://[yourdomain]/publications/YYYY-MM-DD-[url_slug]`
 import csv
 import os
@@ -39,7 +39,7 @@ def create_md(lines: list, layout: list):
         # Parse the filename information
         md_filename = f"{item[layout.index('pub_date')]}-{item[layout.index('url_slug')]}.md"
         html_filename = str(item[layout.index('pub_date')]) + "-" + item[layout.index('url_slug')]
-        
+
         # Parse the YAML variables
         md = f"---\ntitle: \"{item[layout.index('title')]}\"\n"
         md += "collection: publications"
@@ -56,14 +56,14 @@ def create_md(lines: list, layout: list):
             md += f"\npaperurl: '{item[layout.index('paper_url')]}'"
         md += f"\ncitation: '{html_escape(item[layout.index('citation')])}'"
         md += "\n---"
-        
+
         # Markdown description for individual page
         if len(str(item[layout.index('paper_url')])) > 5:
             md += f"\n<a href='{item[layout.index('paper_url')]}'>Download paper here</a>\n"
         if len(str(item[layout.index('excerpt')])) > 5:
             md += f"\n{html_escape(item[layout.index('excerpt')])}\n"
         md += f"\nRecommended citation: {item[layout.index('citation')]}"
-        
+
         # Write the file
         md_filename = os.path.join("../_publications/", os.path.basename(md_filename))
         with open(md_filename, 'w') as f:
@@ -98,7 +98,7 @@ def read(filename: str) -> tuple[list, list]:
         print('The header of the file does not match the expected format', file=sys.stderr)
         sys.exit(EXIT_ERROR)
     lines = lines[1:]
-    
+
     # Return the lines and format
     return lines, layout
 
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     filename = sys.argv[1]
     if not (filename.endswith('.csv') or filename.endswith('.tsv')):
         print(f'Expected a TSV or CSV file, got {filename}', file=sys.stderr)
-        sys.exit(EXIT_ERROR)    
+        sys.exit(EXIT_ERROR)
 
     # Read and process the lines
     lines, layout = read(filename)

@@ -2,7 +2,7 @@
   Thanks for creating a Pull Request!
   
   Before you submit, please make sure you've read the contributing document:
-  - https://github.com/academicpages/academicpages.github.io?tab=contributing-ov-file
+  - https://github.com/remy9802/remy9802.github.io?tab=contributing-ov-file
 -->
 
 <!-- Choose one of the following by uncommenting it. -->

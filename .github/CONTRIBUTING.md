@@ -1,6 +1,6 @@
 Contributions are welcome! 
 
-Bug reports and feature requests to the template  should be [submitted via GitHub](https://github.com/academicpages/academicpages.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/academicpages/academicpages.github.io/discussions). To preform a pull request:
+Bug reports and feature requests to the template  should be [submitted via GitHub](https://github.com/remy9802/remy9802.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/remy9802/remy9802.github.io/discussions). To preform a pull request:
 
 1. Clone the repository.
 1. Create a branch off of master and give it a meaningful name (e.g. `my-new-feature`).

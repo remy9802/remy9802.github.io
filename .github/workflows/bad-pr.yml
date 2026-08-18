@@ -24,8 +24,8 @@ jobs:
           comment: |
             It looks like you are attempting to push a change to the [Academic Pages][1] template repository, for help with deploying your own website please [start a new thread in the discussions][2] or see the [GitHub Docs: About pull requests][3] if you need help.
 
-              [1]: https://github.com/academicpages/academicpages.github.io
-              [2]: https://github.com/academicpages/academicpages.github.io/discussions
+              [1]: https://github.com/remy9802/remy9802.github.io
+              [2]: https://github.com/remy9802/remy9802.github.io/discussions
               [3]: https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests
       - uses: sudo-bot/action-pull-request-lock@v2
         with:
