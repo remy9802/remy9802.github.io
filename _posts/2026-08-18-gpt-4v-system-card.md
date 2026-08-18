@@ -5,6 +5,7 @@ permalink: /posts/gpt-4v-system-card/
 tags: [literature-note, multimodal-llm, gpt-4v, ai-safety]
 note_type: single-paper
 literature_topics: [vlm]
+source_reader: literature-readers/gpt-4v-system-card/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括 Be My Eyes 试点、专家红队、安全后训练与内部评价。  

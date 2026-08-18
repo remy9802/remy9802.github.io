@@ -5,6 +5,7 @@ permalink: /posts/orion-autonomous-driving/
 tags: [literature-note, autonomous-driving, vision-language-action, orion]
 note_type: single-paper
 literature_topics: [autonomous-driving, vla]
+source_reader: literature-readers/orion-autonomous-driving/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括 Bench2Drive 表格、动作接口与历史查询消融。  

@@ -5,6 +5,7 @@ permalink: /posts/llava-visual-instruction-tuning/
 tags: [literature-note, vision-language-model, llava, instruction-tuning]
 note_type: single-paper
 literature_topics: [vlm]
+source_reader: literature-readers/llava-visual-instruction-tuning/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括数据生成提示、LLaVA-Bench、ScienceQA 与消融。  

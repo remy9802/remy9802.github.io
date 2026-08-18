@@ -5,6 +5,7 @@ permalink: /posts/reasoning-vla/
 tags: [literature-note, autonomous-driving, vision-language-action, reasoning-vla]
 note_type: single-paper
 literature_topics: [autonomous-driving, vla]
+source_reader: literature-readers/reasoning-vla/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括统一数据集、动作查询、RL、迁移与 NeuroNCAP 结果。  

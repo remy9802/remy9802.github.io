@@ -5,6 +5,7 @@ permalink: /posts/opendrivevla/
 tags: [literature-note, autonomous-driving, vision-language-action, opendrivevla]
 note_type: single-paper
 literature_topics: [autonomous-driving, vla]
+source_reader: literature-readers/opendrivevla/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括 nuScenes 规划、VQA 与分阶段训练消融。  

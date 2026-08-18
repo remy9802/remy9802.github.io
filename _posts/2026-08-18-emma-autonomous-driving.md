@@ -5,6 +5,7 @@ permalink: /posts/emma-autonomous-driving/
 tags: [literature-note, autonomous-driving, vision-language-action, emma]
 note_type: single-paper
 literature_topics: [autonomous-driving, vla]
+source_reader: literature-readers/emma-autonomous-driving/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括正文、消融实验与附录限制。  

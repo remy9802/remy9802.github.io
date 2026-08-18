@@ -5,6 +5,7 @@ permalink: /posts/gpt-4-technical-report/
 tags: [literature-note, multimodal-llm, gpt-4, openai]
 note_type: single-paper
 literature_topics: [vlm]
+source_reader: literature-readers/gpt-4-technical-report/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括视觉示例、基准、污染检查、RLHF 与限制。  

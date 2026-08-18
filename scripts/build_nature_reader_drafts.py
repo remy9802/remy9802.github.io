@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""Build source-mapped draft nature-reader bundles from extracted PDF text.
+"""Build source-mapped draft nature-reader bundles from selectable-text PDFs.
 
-The script intentionally does not machine-translate body paragraphs. It creates a
-complete page/block map, inserts the manually reviewed lead translation supplied
-in the manifest, and marks every remaining translation, visual crop, and equation
-as pending. This keeps incomplete work explicit instead of presenting summaries
-or low-quality machine translation as a full-paper reader.
+The script creates a complete page/block map, inserts the manually reviewed lead
+translation supplied in the manifest, and marks every remaining translation,
+visual crop, and equation as pending. It deliberately avoids low-quality machine
+translation and keeps incomplete work explicit.
 """
 
 from __future__ import annotations
 
+import argparse
 import difflib
 import html
 import json
@@ -129,6 +129,7 @@ def source_blocks(entry: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dic
         "refs": [],
         "insert_after": None,
         "manually_reviewed": True,
+        "translation_provenance": "human-reviewed",
         "label": entry.get("lead_label", "Abstract"),
     }
     blocks.append(lead)
@@ -169,6 +170,7 @@ def source_blocks(entry: dict[str, Any]) -> tuple[list[dict[str, Any]], list[dic
                 "refs": [],
                 "insert_after": None,
                 "manually_reviewed": False,
+                "translation_provenance": "pending",
             }
             blocks.append(block)
             page_to_ids[page_number].append(block_id)
@@ -236,7 +238,7 @@ def make_paper(entry: dict[str, Any], blocks: list[dict[str, Any]], pages: list[
             "",
             "- 当前文件的价值是稳定保存全文页码与段落锚点，并提供一个经人工复核的开篇双语块。",
             "- 未翻译段落、图表、表格和公式都在 `translation_notes.md` 中登记；完成前不应把本文件标记为正式全文译读。",
-            "- 旧博客笔记可作为研究路线导读，但数值结论仍应回到本读者的具体页码块和原 PDF 核验。",
+            "- 博客笔记可作为研究路线导读，但数值结论仍应回到本读者的具体页码块和原 PDF 核验。",
             "",
         ]
     )
@@ -245,11 +247,12 @@ def make_paper(entry: dict[str, Any], blocks: list[dict[str, Any]], pages: list[
 
 def make_notes(entry: dict[str, Any], blocks: list[dict[str, Any]]) -> str:
     translated = sum(bool(block["translation"]) for block in blocks)
+    human_translated = sum(block.get("translation_provenance") == "human-reviewed" for block in blocks)
     captions = sum(block["type"] == "caption" for block in blocks)
     pending = len(blocks) - translated
     quality_notes = [
         "- 原文来自 PDF 可选文本层；多栏论文可能存在阅读顺序交错，当前块统一标为 medium confidence，人工复核后才可提升置信度。",
-        "- 仅 manifest 中的开篇核心段落经过人工翻译；本机小模型试译未达到忠实度要求，未写入任何读者正文。",
+        "- 仅 manifest 中的开篇核心段落经过人工翻译；自动试译未达到忠实度要求，未写入读者正文。",
         "- 图、表及其 caption 尚待根据 PDF 页面紧裁并放置到首次实质讨论位置；`assets/` 目前为空。",
         "- 显示公式尚待逐页视觉核验、建立 `E...` 锚点并转写为 Markdown 数学；在此之前不得声称公式处理完成。",
         "- 若原文块出现页眉、页脚、双栏串行或表格文本碎片，应在正式翻译阶段按渲染页修正，不从上下文猜测。",
@@ -266,7 +269,7 @@ def make_notes(entry: dict[str, Any], blocks: list[dict[str, Any]]) -> str:
             "- **模式**：source-mapped draft",
             f"- **PDF 页数**：{entry['pages']}",
             f"- **来源块总数**：{len(blocks)}",
-            f"- **已人工翻译块**：{translated}",
+            f"- **已人工复核翻译块**：{human_translated}",
             f"- **待翻译块**：{pending}",
             f"- **已识别 caption 候选**：{captions}（尚未完成紧裁与图注配对）",
             "",
@@ -318,6 +321,7 @@ def build_entry(entry: dict[str, Any]) -> dict[str, Any]:
         "pages": entry["pages"],
         "blocks": len(blocks),
         "translated": sum(bool(block["translation"]) for block in blocks),
+        "human_reviewed": sum(block.get("translation_provenance") == "human-reviewed" for block in blocks),
     }
 
 
@@ -325,14 +329,14 @@ def build_index(results: list[dict[str, Any]]) -> None:
     lines = [
         "# Nature Reader 文献重读工作区",
         "",
-        "> 13 份来源共 407 页。本目录当前保存 source-mapped draft；每份读者都明确区分已人工翻译块和待处理块。",
+        "> 13 份来源共 407 页。本目录保存 source-mapped draft；每份读者都明确区分已人工翻译块和待处理块。",
         "",
         "| 文献 | 页数 | 来源块 | 已人工翻译 | 状态 |",
         "|---|---:|---:|---:|---|",
     ]
     for item in results:
         lines.append(
-            f"| [{item['title']}]({item['slug']}/paper.md) | {item['pages']} | {item['blocks']} | {item['translated']} | draft |"
+            f"| [{item['title']}]({item['slug']}/paper.md) | {item['pages']} | {item['blocks']} | {item['human_reviewed']} | draft |"
         )
     lines.extend(
         [
@@ -347,10 +351,26 @@ def build_index(results: list[dict[str, Any]]) -> None:
     (OUTPUT_ROOT / "README.md").write_text("\n".join(lines), encoding="utf-8")
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--paper", action="append", default=[], help="Only build the selected slug; repeatable")
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-    results = [build_entry(entry) for entry in manifest["papers"]]
-    build_index(results)
+    entries = manifest["papers"]
+    if args.paper:
+        requested = set(args.paper)
+        entries = [entry for entry in entries if entry["slug"] in requested]
+        missing = requested - {entry["slug"] for entry in entries}
+        if missing:
+            raise SystemExit(f"Unknown paper slug(s): {', '.join(sorted(missing))}")
+
+    results = [build_entry(entry) for entry in entries]
+    if not args.paper:
+        build_index(results)
     print(json.dumps({"papers": len(results), "pages": sum(item["pages"] for item in results), "results": results}, ensure_ascii=False, indent=2))
 
 

@@ -5,6 +5,7 @@ permalink: /posts/gpt-4o-system-card/
 tags: [literature-note, multimodal-llm, gpt-4o, ai-safety]
 note_type: single-paper
 literature_topics: [vlm]
+source_reader: literature-readers/gpt-4o-system-card/paper.md
 ---
 
 > **阅读范围**：阅读全文，包括模型描述、训练数据类别、外部红队、Preparedness 与语音风险。  
