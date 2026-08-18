@@ -32,21 +32,22 @@ literature_topics: [embodied-ai, vla, wam, world-model, real-robot-rl]
 
 ### 条目状态与检索标签
 
-| 条目 | 一手资料状态 | 官方代码 | 检索标签 |
-|---|---|---|---|
-| π0 | RSS 2025 论文 | [openpi](https://github.com/Physical-Intelligence/openpi) | 具身、VLA |
-| π0.5 | CoRL 2025 论文 | [openpi](https://github.com/Physical-Intelligence/openpi) | 具身、VLA |
-| π0.6 | Physical Intelligence 模型卡 | 未公开完整版本 | 具身、VLA |
-| π*0.6 / RECAP | arXiv 论文与机构技术页 | 未公开 | 具身、VLA、真机强化学习 |
-| π0.7 | arXiv 预印本与机构技术页 | 未公开 | 具身、VLA |
-| GR00T N1 / N1.7 | N1 为 arXiv 论文；N1.7 为模型版本 | [Isaac-GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 具身、VLA、人形机器人 |
-| DreamZero | arXiv 预印本、ICLR 2026 World Models Workshop | [dreamzero](https://github.com/dreamzero0/dreamzero) | 具身、WAM、世界模型 |
-| Fast-WAM | arXiv 预印本 | [FastWAM](https://github.com/yuantianyuan01/FastWAM) | 具身、WAM、世界模型 |
-| Faster-WAM | arXiv 预印本 | [FasterWAM](https://github.com/hustvl/FasterWAM) | 具身、WAM、世界模型 |
-| HIL-SERL | Science Robotics 2025 | [hil-serl](https://github.com/rail-berkeley/hil-serl) | 具身、真机强化学习、人类干预 |
-| RL Token | arXiv 预印本与机构技术页 | 未公开官方代码 | 具身、VLA、真机强化学习 |
-| WCM | arXiv 预印本 | [WCM](https://github.com/sylvestf/WCM) | 具身、世界模型、真机强化学习 |
-| AutoSERL | ECCV 2026；arXiv 预印本 | [AutoSERL](https://github.com/autoserl/AutoSERL) | 具身、真机强化学习、自动干预 |
+| 条目 | 一手资料状态 | 官方代码 | 检索标签 | 中文精读 |
+|---|---|---|---|---|
+| π0 | RSS 2025 论文 | [openpi](https://github.com/Physical-Intelligence/openpi) | 具身、VLA | [阅读全文](/posts/pi0/) |
+| π0.5 | CoRL 2025 论文 | [openpi](https://github.com/Physical-Intelligence/openpi) | 具身、VLA | [阅读全文](/posts/pi05/) |
+| π0.6 | Physical Intelligence 模型卡 | 未公开完整版本 | 具身、VLA | [阅读全文](/posts/pi06-model-card/) |
+| π*0.6 / RECAP | arXiv 论文与机构技术页 | 未公开 | 具身、VLA、真机强化学习 | [阅读全文](/posts/pistar06-recap/) |
+| π0.7 | arXiv 预印本与机构技术页 | 未公开 | 具身、VLA | [阅读全文](/posts/pi07/) |
+| GR00T N1 | arXiv 论文 | [Isaac-GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 具身、VLA、人形机器人 | [阅读全文](/posts/gr00t-n1/) |
+| GR00T N1.7 | NVIDIA 模型版本发布 | [Isaac-GR00T](https://github.com/NVIDIA/Isaac-GR00T) | 具身、VLA、人形机器人 | [阅读全文](/posts/gr00t-n17/) |
+| DreamZero | arXiv 预印本、ICLR 2026 World Models Workshop | [dreamzero](https://github.com/dreamzero0/dreamzero) | 具身、WAM、世界模型 | [阅读全文](/posts/dreamzero/) |
+| Fast-WAM | arXiv 预印本 | [FastWAM](https://github.com/yuantianyuan01/FastWAM) | 具身、WAM、世界模型 | [阅读全文](/posts/fast-wam/) |
+| Faster-WAM | arXiv 预印本 | [FasterWAM](https://github.com/hustvl/FasterWAM) | 具身、WAM、世界模型 | [阅读全文](/posts/faster-wam-2608-04404/) |
+| HIL-SERL | Science Robotics 2025 | [hil-serl](https://github.com/rail-berkeley/hil-serl) | 具身、真机强化学习、人类干预 | [阅读全文](/posts/hil-serl/) |
+| RL Token | arXiv 预印本与机构技术页 | 未公开官方代码 | 具身、VLA、真机强化学习 | [阅读全文](/posts/rl-token/) |
+| WCM | arXiv 预印本 | [WCM](https://github.com/sylvestf/WCM) | 具身、世界模型、真机强化学习 | [阅读全文](/posts/wcm-world-critic-model/) |
+| AutoSERL | ECCV 2026；arXiv 预印本 | [AutoSERL](https://github.com/autoserl/AutoSERL) | 具身、真机强化学习、自动干预 | [阅读全文](/posts/autoserl/) |
 
 ## 研究问题
 

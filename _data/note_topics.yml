@@ -1,0 +1,31 @@
+- id: reinforcement-learning
+  label: 强化学习
+  description: 强化学习基础、算法谱系、训练诊断与实践经验
+
+- id: machine-learning
+  label: 机器学习
+  description: 机器学习原理、模型设计、优化方法与评测
+
+- id: world-models
+  label: 世界模型
+  description: 环境动力学、潜变量预测、想象学习与规划
+
+- id: robotics
+  label: 机器人
+  description: 机器人感知、控制、具身学习与真机系统
+
+- id: mathematics
+  label: 数学与优化
+  description: 概率统计、线性代数、优化与理论推导
+
+- id: engineering
+  label: 工程实践
+  description: 代码、系统、实验设计、调试与复现经验
+
+- id: research-methods
+  label: 研究方法
+  description: 问题定义、证据判断、实验方法与学术工作流
+
+- id: thinking
+  label: 思考随笔
+  description: 对技术、研究和学习过程的阶段性思考

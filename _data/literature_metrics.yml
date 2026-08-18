@@ -1,0 +1,5 @@
+# 文献列表使用的可刷新指标快照。
+# 引用数是动态数据库指标，不代表论文质量，也不等同于严格他引数。
+citation_source: "Semantic Scholar"
+citation_count_as_of: "2026-08-18"
+papers: {}

@@ -46,7 +46,27 @@ author_profile: false
         <option value="topic-synthesis">主题综述</option>
       </select>
     </div>
+
+    <div class="literature-sort-filter">
+      <label for="literature-sort">排序方式</label>
+      <select id="literature-sort" data-literature-sort>
+        <option value="date-desc">笔记时间：最新优先</option>
+        <option value="date-asc">笔记时间：最早优先</option>
+        <option value="paper-year-desc">论文年份：最新优先</option>
+        <option value="paper-year-asc">论文年份：最早优先</option>
+        <option value="citations-desc">引用数：从高到低</option>
+        <option value="citations-asc">引用数：从低到高</option>
+        <option value="title-asc">标题：A → Z</option>
+        <option value="title-desc">标题：Z → A</option>
+      </select>
+    </div>
   </div>
+
+  {% if site.data.literature_metrics %}
+    <p class="literature-metrics-note">
+      引用数采用 {{ site.data.literature_metrics.citation_source }} 快照（截至 {{ site.data.literature_metrics.citation_count_as_of }}）；动态指标仅用于排序参考，未核验条目始终置后。
+    </p>
+  {% endif %}
 
   <details class="literature-taxonomy-guide">
     <summary>查看分类说明</summary>
@@ -68,12 +88,37 @@ author_profile: false
   <div class="literature-grid" data-literature-grid>
     {% for post in site.posts %}
       {% if post.note_type == 'single-paper' or post.note_type == 'topic-synthesis' %}
-        <article class="literature-card" data-literature-card data-topics="{{ post.literature_topics | join: ' ' }}" data-kind="{{ post.note_type }}">
+        {% assign literature_metric = site.data.literature_metrics.papers[post.slug] %}
+        {% assign paper_year = post.paper_year | default: literature_metric.paper_year %}
+        {% assign citation_count = post.citation_count | default: literature_metric.citation_count %}
+        {% assign citation_source = post.citation_source | default: literature_metric.citation_source | default: site.data.literature_metrics.citation_source %}
+        {% assign citation_count_as_of = post.citation_count_as_of | default: literature_metric.citation_count_as_of | default: site.data.literature_metrics.citation_count_as_of %}
+        {% assign citation_url = post.citation_url | default: literature_metric.citation_url %}
+        <article class="literature-card"
+                 data-literature-card
+                 data-topics="{{ post.literature_topics | join: ' ' }}"
+                 data-kind="{{ post.note_type }}"
+                 data-date="{{ post.date | date_to_xmlschema }}"
+                 data-paper-year="{{ paper_year }}"
+                 data-citations="{{ citation_count }}"
+                 data-title="{{ post.title | strip_html | escape }}">
           <div class="literature-card__meta">
             <span class="literature-kind-badge">
               {% if post.note_type == 'topic-synthesis' %}主题综述{% else %}单篇精读{% endif %}
             </span>
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+            <span class="literature-card__metrics">
+              {% if paper_year %}
+                <span title="论文发表年份">论文 {{ paper_year }}</span>
+              {% endif %}
+              {% if citation_count != nil and citation_count != '' %}
+                {% if citation_url %}
+                  <a href="{{ citation_url }}" title="{{ citation_source }} 引用快照，截至 {{ citation_count_as_of }}">被引 <span data-citation-number>{{ citation_count }}</span></a>
+                {% else %}
+                  <span title="{{ citation_source }} 引用快照，截至 {{ citation_count_as_of }}">被引 <span data-citation-number>{{ citation_count }}</span></span>
+                {% endif %}
+              {% endif %}
+              <time datetime="{{ post.date | date_to_xmlschema }}" title="笔记发布日期">笔记 {{ post.date | date: "%Y-%m-%d" }}</time>
+            </span>
           </div>
 
           <h2><a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a></h2>

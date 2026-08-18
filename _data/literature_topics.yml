@@ -6,6 +6,18 @@
   label: VLM
   description: 视觉语言模型、多模态理解与视觉指令微调
 
+- id: llm
+  label: LLM
+  description: 大语言模型架构、预训练、扩展规律、指令对齐与推理能力
+
+- id: visual-representation
+  label: 视觉表征
+  description: ViT、CLIP、SigLIP 等视觉编码器、图文对齐与可迁移表征学习
+
+- id: diffusion-model
+  label: 扩散/流模型
+  description: DiT、MM-DiT、扩散模型、Rectified Flow 与多模态生成骨干
+
 - id: embodied-ai
   label: 具身
   description: 具身智能、机器人操作、导航与环境交互
@@ -14,6 +26,10 @@
   label: VLA
   description: 从视觉和语言输入生成物理动作的模型
 
+- id: action-representation
+  label: 动作表征
+  description: 连续机器人动作离散化、动作 tokenization、action chunking 与生成式动作解码
+
 - id: wam
   label: WAM
   description: World Action Model，联合建模环境演化与动作
@@ -21,6 +37,14 @@
 - id: world-model
   label: 世界模型
   description: 环境动力学、生成式预测与规划模型
+
+- id: model-based-rl
+  label: 基于模型的强化学习
+  description: 通过学习动力学模型进行想象训练、树搜索或模型预测控制
+
+- id: self-supervised-learning
+  label: 自监督学习
+  description: 从未标注图像、视频或交互轨迹中学习可迁移表征与预测模型
 
 - id: real-robot-rl
   label: 真机强化学习

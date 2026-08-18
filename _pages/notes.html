@@ -1,0 +1,140 @@
+---
+layout: archive
+permalink: /notes/
+title: "笔记"
+author_profile: false
+---
+
+{% include base_path %}
+{% assign notes = site.notes | sort: "date" | reverse %}
+
+<section class="literature-library notes-library" data-notes-library>
+  <header class="literature-library__intro">
+    <p class="literature-library__eyebrow">LEARNING &amp; THINKING NOTES</p>
+    <h2>记录学习脉络，也保留阶段性思考</h2>
+    <p>这里收录概念梳理、方法比较、实践总结和思考随笔。可按主题与笔记类型筛选，也可检索标题、标签和正文。</p>
+  </header>
+
+  <div class="literature-controls" aria-label="笔记检索工具">
+    <div class="literature-search">
+      <label for="notes-query">检索笔记</label>
+      <div class="literature-search__field">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input id="notes-query" type="search" inputmode="search" autocomplete="off" placeholder="输入概念、算法、主题或关键词…" data-notes-query>
+        <button type="button" class="literature-search__clear" data-notes-clear aria-label="清除全部筛选">清除</button>
+      </div>
+    </div>
+
+    <fieldset class="literature-topic-filter">
+      <legend>笔记主题</legend>
+      <div class="literature-filter-list" data-notes-topic-list>
+        <button type="button" class="literature-filter is-active" data-note-topic="" aria-pressed="true">
+          全部 <span data-note-topic-count="all">0</span>
+        </button>
+        {% for topic in site.data.note_topics %}
+          <button type="button" class="literature-filter" data-note-topic="{{ topic.id }}" aria-pressed="false" title="{{ topic.description }}">
+            {{ topic.label }} <span data-note-topic-count="{{ topic.id }}">0</span>
+          </button>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <div class="literature-kind-filter">
+      <label for="notes-kind">笔记类型</label>
+      <select id="notes-kind" data-notes-kind>
+        <option value="">全部类型</option>
+        <option value="learning">学习笔记</option>
+        <option value="reflection">思考笔记</option>
+      </select>
+    </div>
+
+    <div class="literature-sort-filter">
+      <label for="notes-sort">排序方式</label>
+      <select id="notes-sort" data-notes-sort>
+        <option value="date-desc">时间：最新优先</option>
+        <option value="date-asc">时间：最早优先</option>
+        <option value="title-asc">标题：A → Z</option>
+        <option value="title-desc">标题：Z → A</option>
+      </select>
+    </div>
+  </div>
+
+  <details class="literature-taxonomy-guide">
+    <summary>查看分类说明</summary>
+    <div class="literature-taxonomy-guide__grid">
+      {% for topic in site.data.note_topics %}
+        <div>
+          <strong>{{ topic.label }}</strong>
+          <span>{{ topic.description }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </details>
+
+  <div class="literature-results-bar">
+    <p data-notes-status aria-live="polite">正在整理笔记…</p>
+    <p class="literature-results-bar__hint"><kbd>/</kbd> 聚焦搜索，<kbd>Esc</kbd> 清除</p>
+  </div>
+
+  <div class="literature-grid" data-notes-grid>
+    {% for note in notes %}
+      <article class="literature-card"
+               data-note-card
+               data-topics="{{ note.note_topics | join: ' ' }}"
+               data-kind="{{ note.note_kind }}"
+               data-date="{{ note.date | date_to_xmlschema }}"
+               data-title="{{ note.title | strip_html | escape }}">
+        <div class="literature-card__meta">
+          <span class="literature-kind-badge">
+            {% if note.note_kind == 'reflection' %}思考笔记{% else %}学习笔记{% endif %}
+          </span>
+          <time datetime="{{ note.date | date_to_xmlschema }}">{{ note.date | date: "%Y-%m-%d" }}</time>
+        </div>
+
+        <h2><a href="{{ base_path }}{{ note.url }}">{{ note.title }}</a></h2>
+
+        {% if note.note_topics %}
+          <div class="literature-card__topics" aria-label="笔记主题">
+            {% for topic_id in note.note_topics %}
+              {% assign topic = site.data.note_topics | where: "id", topic_id | first %}
+              <a href="{{ base_path }}/notes/?topic={{ topic_id | uri_escape }}" class="literature-topic-badge">{{ topic.label | default: topic_id }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <p class="literature-card__excerpt">{{ note.excerpt | markdownify | strip_html | strip_newlines | truncate: 210 }}</p>
+
+        {% if note.tags %}
+          <ul class="literature-card__tags" aria-label="关键词">
+            {% for tag in note.tags limit: 6 %}
+              <li>{{ tag }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        <span hidden data-note-search-document>
+          {{ note.title | escape }}
+          {{ note.excerpt | markdownify | strip_html | strip_newlines | escape }}
+          {{ note.tags | join: ' ' | escape }}
+          {% for topic_id in note.note_topics %}
+            {% assign topic = site.data.note_topics | where: "id", topic_id | first %}
+            {{ topic_id | escape }} {{ topic.label | escape }}
+          {% endfor %}
+          {{ note.content | strip_html | strip_newlines | escape }}
+        </span>
+      </article>
+    {% endfor %}
+  </div>
+
+  <div class="literature-empty" data-notes-empty hidden>
+    <i class="fa fa-folder-open" aria-hidden="true"></i>
+    <h2>暂时没有匹配的笔记</h2>
+    <p>可以减少关键词，切换主题，或清除筛选后重新检索。</p>
+  </div>
+
+  <noscript>
+    <p class="notice--warning">当前浏览器未启用 JavaScript，因此仍会显示全部笔记，但搜索和筛选不可用。</p>
+  </noscript>
+</section>
+
+<script defer src="{{ base_path }}/assets/js/notes-search.js"></script>

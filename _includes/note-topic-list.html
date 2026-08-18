@@ -1,0 +1,21 @@
+{% include base_path %}
+
+{% if include.topics %}
+  <nav class="literature-topic-list" aria-label="笔记主题">
+    {% if include.kind %}
+      <span class="literature-topic-list__label">类型</span>
+      <span class="literature-topic-badge">
+        {% if include.kind == 'reflection' %}思考笔记{% else %}学习笔记{% endif %}
+      </span>
+    {% endif %}
+    <span class="literature-topic-list__label">主题</span>
+    {% for topic_id in include.topics %}
+      {% assign topic = site.data.note_topics | where: "id", topic_id | first %}
+      {% if topic %}
+        <a class="literature-topic-badge" href="{{ base_path }}/notes/?topic={{ topic.id | uri_escape }}">{{ topic.label }}</a>
+      {% else %}
+        <span class="literature-topic-badge">{{ topic_id }}</span>
+      {% endif %}
+    {% endfor %}
+  </nav>
+{% endif %}

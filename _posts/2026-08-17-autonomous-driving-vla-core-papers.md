@@ -156,6 +156,7 @@ EMMA 的规划、检测、道路图联合训练分别报告约 +1.4%、+5.5%、+
 
 ## 延伸阅读
 
+- [X-Mind：把预测世界模型内化为自动驾驶 Visual CoT](/posts/x-mind/)：用 96-token future sketch 与单次主干前向中的 Recurrent Block Diffusion 强化规划；本文提供独立全文精读，并审计其私有开环证据与闭环边界。
 - [A Survey on Vision-Language-Action Models for Autonomous Driving](https://arxiv.org/abs/2506.24044)：用于快速建立任务、数据和模型谱系，但性能判断仍应回到原论文。
 - [VLGA: Vision-Language-Geometric-Action Model for End-to-End Autonomous Driving](https://arxiv.org/abs/2606.12396)：用 dense pointmap geometry expert 强化几何接地；截至本文检索日仍为预印本，适合作为后续路线观察。
 

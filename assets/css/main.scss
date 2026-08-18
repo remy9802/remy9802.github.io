@@ -76,7 +76,7 @@
 
 .literature-controls {
   display: grid;
-  grid-template-columns: minmax(15rem, 2fr) minmax(9rem, 1fr);
+  grid-template-columns: minmax(15rem, 2fr) repeat(2, minmax(9rem, 1fr));
   gap: 1rem;
   align-items: end;
   padding: 1rem;
@@ -91,6 +91,7 @@
 
 .literature-search label,
 .literature-kind-filter label,
+.literature-sort-filter label,
 .literature-topic-filter legend {
   display: block;
   margin-bottom: 0.4rem;
@@ -186,7 +187,8 @@
   color: #fff;
 }
 
-.literature-kind-filter select {
+.literature-kind-filter select,
+.literature-sort-filter select {
   width: 100%;
   min-height: 2.35rem;
   margin: 0;
@@ -195,6 +197,13 @@
   border-radius: 0.55rem;
   background-color: var(--global-bg-color);
   color: var(--global-text-color);
+}
+
+.literature-metrics-note {
+  margin: 0.65rem 0 0;
+  color: var(--global-text-color-light);
+  font-size: 0.72rem;
+  line-height: 1.55;
 }
 
 .literature-taxonomy-guide {
@@ -287,6 +296,24 @@
   align-items: center;
   color: var(--global-text-color-light);
   font-size: 0.7rem;
+}
+
+.literature-card__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.2rem 0.55rem;
+  text-align: right;
+}
+
+.literature-card__metrics a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.literature-card__metrics a:hover {
+  color: var(--global-link-color-hover);
+  text-decoration: underline;
 }
 
 .literature-kind-badge {

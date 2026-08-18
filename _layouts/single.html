@@ -44,6 +44,9 @@ layout: default
         {% if page.literature_topics %}
           {% include literature-topic-list.html topics=page.literature_topics %}
         {% endif %}
+        {% if page.note_topics %}
+          {% include note-topic-list.html topics=page.note_topics kind=page.note_kind %}
+        {% endif %}
         </header>
       {% endunless %}
 

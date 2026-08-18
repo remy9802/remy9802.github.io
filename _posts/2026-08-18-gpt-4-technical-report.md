@@ -4,11 +4,11 @@ date: 2026-08-18
 permalink: /posts/gpt-4-technical-report/
 tags: [literature-note, multimodal-llm, gpt-4, openai]
 note_type: single-paper
-literature_topics: [vlm]
+literature_topics: [vlm, llm]
 ---
 
-> **阅读范围**：阅读全文，包括视觉示例、基准、污染检查、RLHF 与限制。  
-> **检索日期**：2026-08-18。  
+> **阅读范围**：阅读全文，包括视觉示例、基准、污染检查、RLHF 与限制。<br>
+> **检索日期**：2026-08-18。<br>
 > **主题**：GPT-4 报告公开了哪些多模态能力证据，又刻意没有公开什么？
 
 ## 文献档案
