@@ -1,0 +1,15 @@
+{% include base_path %}
+
+{% if include.topics %}
+  <nav class="literature-topic-list" aria-label="文献主题">
+    <span class="literature-topic-list__label">主题</span>
+    {% for topic_id in include.topics %}
+      {% assign topic = site.data.literature_topics | where: "id", topic_id | first %}
+      {% if topic %}
+        <a class="literature-topic-badge" href="{{ base_path }}/literature/?topic={{ topic.id | uri_escape }}">{{ topic.label }}</a>
+      {% else %}
+        <span class="literature-topic-badge">{{ topic_id }}</span>
+      {% endif %}
+    {% endfor %}
+  </nav>
+{% endif %}

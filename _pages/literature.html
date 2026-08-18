@@ -1,0 +1,117 @@
+---
+layout: archive
+permalink: /literature/
+title: "文献库"
+author_profile: false
+---
+
+{% include base_path %}
+
+<section class="literature-library" data-literature-library>
+  <header class="literature-library__intro">
+    <p class="literature-library__eyebrow">RESEARCH LIBRARY</p>
+    <h2>按研究主题整理，也可全文检索</h2>
+    <p>主题允许重叠：例如自动驾驶 VLA 会同时出现在“自驾”和“VLA”中。搜索范围覆盖标题、作者、机构、模型名、标签和正文。</p>
+  </header>
+
+  <div class="literature-controls" aria-label="文献检索工具">
+    <div class="literature-search">
+      <label for="literature-query">检索文献</label>
+      <div class="literature-search__field">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input id="literature-query" type="search" inputmode="search" autocomplete="off" placeholder="输入论文、作者、机构、方法或关键词…" data-literature-query>
+        <button type="button" class="literature-search__clear" data-literature-clear aria-label="清除全部筛选">清除</button>
+      </div>
+    </div>
+
+    <fieldset class="literature-topic-filter">
+      <legend>研究主题</legend>
+      <div class="literature-filter-list" data-literature-topic-list>
+        <button type="button" class="literature-filter is-active" data-topic="" aria-pressed="true">
+          全部 <span data-topic-count="all">0</span>
+        </button>
+        {% for topic in site.data.literature_topics %}
+          <button type="button" class="literature-filter" data-topic="{{ topic.id }}" aria-pressed="false" title="{{ topic.description }}">
+            {{ topic.label }} <span data-topic-count="{{ topic.id }}">0</span>
+          </button>
+        {% endfor %}
+      </div>
+    </fieldset>
+
+    <div class="literature-kind-filter">
+      <label for="literature-kind">笔记类型</label>
+      <select id="literature-kind" data-literature-kind>
+        <option value="">全部类型</option>
+        <option value="single-paper">单篇精读</option>
+        <option value="topic-synthesis">主题综述</option>
+      </select>
+    </div>
+  </div>
+
+  <details class="literature-taxonomy-guide">
+    <summary>查看分类说明</summary>
+    <div class="literature-taxonomy-guide__grid">
+      {% for topic in site.data.literature_topics %}
+        <div>
+          <strong>{{ topic.label }}</strong>
+          <span>{{ topic.description }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </details>
+
+  <div class="literature-results-bar">
+    <p data-literature-status aria-live="polite">正在整理文献…</p>
+    <p class="literature-results-bar__hint"><kbd>/</kbd> 聚焦搜索，<kbd>Esc</kbd> 清除</p>
+  </div>
+
+  <div class="literature-grid" data-literature-grid>
+    {% for post in site.posts %}
+      {% if post.note_type == 'single-paper' or post.note_type == 'topic-synthesis' %}
+        <article class="literature-card" data-literature-card data-topics="{{ post.literature_topics | join: ' ' }}" data-kind="{{ post.note_type }}">
+          <div class="literature-card__meta">
+            <span class="literature-kind-badge">
+              {% if post.note_type == 'topic-synthesis' %}主题综述{% else %}单篇精读{% endif %}
+            </span>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+          </div>
+
+          <h2><a href="{{ base_path }}{{ post.url }}">{{ post.title }}</a></h2>
+
+          {% if post.literature_topics %}
+            <div class="literature-card__topics" aria-label="研究主题">
+              {% for topic_id in post.literature_topics %}
+                {% assign topic = site.data.literature_topics | where: "id", topic_id | first %}
+                <a href="{{ base_path }}/literature/?topic={{ topic_id | uri_escape }}" class="literature-topic-badge">{{ topic.label | default: topic_id }}</a>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <p class="literature-card__excerpt">{{ post.excerpt | markdownify | strip_html | strip_newlines | truncate: 210 }}</p>
+
+          {% if post.tags %}
+            <ul class="literature-card__tags" aria-label="关键词">
+              {% for tag in post.tags limit: 5 %}
+                <li>{{ tag }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+
+          <span hidden data-literature-search-document>{{ post.title | escape }} {{ post.tags | join: ' ' | escape }} {{ post.content | strip_html | strip_newlines | escape }}</span>
+        </article>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="literature-empty" data-literature-empty hidden>
+    <i class="fa fa-folder-open" aria-hidden="true"></i>
+    <h2>暂时没有匹配的文献</h2>
+    <p>可以减少关键词，切换主题，或清除筛选后重新检索。</p>
+  </div>
+
+  <noscript>
+    <p class="notice--warning">当前浏览器未启用 JavaScript，因此仍会显示全部文献，但搜索和筛选不可用。</p>
+  </noscript>
+</section>
+
+<script defer src="{{ base_path }}/assets/js/literature-search.js"></script>

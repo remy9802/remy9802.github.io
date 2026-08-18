@@ -13,7 +13,7 @@ title                    : "Remy的个人主页"
 title_separator          : "-"
 name                     : &name "Remy"
 description              : &description "用于记录个人学习和生活"   # Update this with a general description of your site, this is the default if not overridden by a page
-url                      : https://academicpages.github.io # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
+url                      : "https://remy9802.github.io" # The base hostname & protocol for your site e.g. "https://[your GitHub username].github.io",
                                                            # or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "remy9802/remy9802.github.io"
@@ -51,7 +51,7 @@ author:
   bitbucket        : # Username - Update with your username on the site
   codepen          : # Username
   dribbble         : # Username
-  github           : "academicpages"
+  github           : "remy9802"
   kaggle           : # Username  
   stackoverflow    : # User number or user number and name (i.e., use "1" or "1/jeff-atwood")    
 
@@ -190,6 +190,7 @@ exclude:
   - package.json*
   - Rakefile
   - README
+  - literature-readers
   - skills
   - tmp
   - vendor

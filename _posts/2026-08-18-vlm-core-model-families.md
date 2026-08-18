@@ -4,6 +4,7 @@ date: 2026-08-18
 permalink: /posts/vlm-core-model-families/
 tags: [vision-language-model, multimodal-llm, qwen-vl, llava, internvl, gpt, literature-note]
 note_type: topic-synthesis
+literature_topics: [vlm]
 ---
 
 > **阅读范围**：全文阅读 8 份主要来源，对应 6 条用户指定的模型路线：Qwen-VL、Qwen2-VL、Qwen3-VL、LLaVA、InternVL、GPT-4V/GPT-4o。  

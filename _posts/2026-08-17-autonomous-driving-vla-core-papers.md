@@ -4,6 +4,7 @@ date: 2026-08-17
 permalink: /posts/autonomous-driving-vla-core-papers/
 tags: [autonomous-driving, vision-language-action, end-to-end-driving, literature-note]
 note_type: topic-synthesis
+literature_topics: [autonomous-driving, vla]
 ---
 
 > **阅读范围**：截至 2026-08-17，定向检索并阅读全文，选取 5 篇已有正式同行评审版本、且覆盖不同“推理—动作”接口的代表性工作。本文是技术脉络笔记，不是系统综述或可复现性审计。

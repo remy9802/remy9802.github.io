@@ -19,6 +19,9 @@ main:
     
   - title: "Portfolio"
     url: /portfolio/
+
+  - title: "文献检索"
+    url: /literature/
         
   - title: "Blog Posts"
     url: /year-archive/

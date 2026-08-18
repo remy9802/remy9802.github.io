@@ -1,0 +1,23 @@
+- id: autonomous-driving
+  label: 自驾
+  description: 自动驾驶感知、决策、规划与闭环评测
+
+- id: vlm
+  label: VLM
+  description: 视觉语言模型、多模态理解与视觉指令微调
+
+- id: embodied-ai
+  label: 具身
+  description: 具身智能、机器人操作、导航与环境交互
+
+- id: vla
+  label: VLA
+  description: 从视觉和语言输入生成物理动作的模型
+
+- id: wam
+  label: WAM
+  description: World Action Model，联合建模环境演化与动作
+
+- id: world-model
+  label: 世界模型
+  description: 环境动力学、生成式预测与规划模型
