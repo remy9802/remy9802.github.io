@@ -59,10 +59,10 @@ GPT-3 之后的主流问题是：在给定训练 FLOPs 时，参数量和 token 
 
 ### 1. 输入、输出与模型结构
 
-任务是标准 causal language modeling：给定前缀 (x_{<t})，最小化下一个 token 的负对数似然。网络为 decoder-only Transformer，并组合三项当时已经分别验证过的设计：
+任务是标准 causal language modeling：给定前缀 $x_{<t}$，最小化下一个 token 的负对数似然。网络为 decoder-only Transformer，并组合三项当时已经分别验证过的设计：
 
 - **Pre-Norm + RMSNorm**：在每个子层输入处归一化，目标是改善深层训练稳定性。
-- **SwiGLU FFN**：以门控激活替代 ReLU；中间维度采用约 \(\frac{2}{3}\times 4d\)，控制参数量。
+- **SwiGLU FFN**：以门控激活替代 ReLU；中间维度采用约 $\frac{2}{3}\times 4d$，控制参数量。
 - **RoPE**：删除绝对位置嵌入，在每层 attention 的 query/key 上编码相对位置信息。
 
 这不是一篇提出新注意力算子的论文；贡献来自目标函数、数据规模、成熟组件与系统实现的组合。
@@ -75,7 +75,7 @@ GPT-3 之后的主流问题是：在给定训练 FLOPs 时，参数量和 token 
 
 ### 3. tokenizer、优化与系统实现
 
-Tokenizer 是 SentencePiece BPE：数字按单个字符拆分，未知 UTF-8 字符回退到 byte。AdamW 参数为 \(\beta_1=0.9,\beta_2=0.95\)，weight decay 0.1、gradient clipping 1.0、2,000 warm-up steps，随后 cosine decay 到峰值学习率的 10%。
+Tokenizer 是 SentencePiece BPE：数字按单个字符拆分，未知 UTF-8 字符回退到 byte。AdamW 参数为 $\beta_1=0.9,\beta_2=0.95$，weight decay 0.1、gradient clipping 1.0、2,000 warm-up steps，随后 cosine decay 到峰值学习率的 10%。
 
 系统侧采用 xFormers 风格的 memory-efficient causal attention、选择性 activation checkpointing、model/sequence parallelism，以及计算和 all-reduce 重叠。论文报告 65B 在 2,048 张 A100-80GB 上约为 380 token/s/GPU，1.4T token 约训练 21 天；这是特定硬件与实现下的吞吐，不应视为通用复现成本。
 

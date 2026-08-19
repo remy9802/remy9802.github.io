@@ -67,23 +67,23 @@ RECAP 的出发点是把三个来源的经验放在同一数据聚合框架中�
 
 ### 1. 三步迭代框架
 
-对目标任务 \(\ell\)，每轮 RECAP 包含：
+对目标任务 $\ell$，每轮 RECAP 包含：
 
 1. **收集数据**：运行当前 VLA，记录每个 episode 的任务结果；部分 rollout 由专家监控并在需要时接管。
-2. **训练价值函数**：在截至当前轮的全部数据上训练多任务价值函数 \(V^{\pi_{\mathrm{ref}}}(o_t,\ell)\)，预测失败风险和距完成时间。
+2. **训练价值函数**：在截至当前轮的全部数据上训练多任务价值函数 $V^{\pi_{\mathrm{ref}}}(o_t,\ell)$，预测失败风险和距完成时间。
 3. **优势条件策略训练**：由价值差构造二值 improvement indicator，将其作为文本条件加入 VLA，再从通用预训练检查点训练/微调策略。
 
 预训练阶段只在数万小时、多机器人、多任务示范上做第 2、3 步；下游任务阶段从示范 SFT 开始，再执行一轮或多轮完整循环。论文的 Algorithm 1 明确指出，各轮 specialist 都从预训练策略与价值函数初始化，而不是只在上一轮参数上无限累积。[原文 §IV-C](https://arxiv.org/html/2511.14759v2#S4.SS3)
 
 ### 2. 分布式价值函数
 
-价值函数把图像观测与语言任务映射为 \(B=201\) 个离散价值 bin 的分布：
+价值函数把图像观测与语言任务映射为 $B=201$ 个离散价值 bin 的分布：
 
 $$
 p_\phi(V\mid o_t,\ell)\in\Delta^{B}.
 $$
 
-若轨迹 \(\tau\) 从时刻 \(t\) 到结束的经验回报为 \(R_t(\tau)\)，把它离散为 \(R_t^B\)，以交叉熵训练：
+若轨迹 $\tau$ 从时刻 $t$ 到结束的经验回报为 $R_t(\tau)$，把它离散为 $R_t^B$，以交叉熵训练：
 
 $$
 \min_\phi\;\mathbb E_{\tau\sim D}
@@ -106,11 +106,11 @@ r_t=
 \end{cases}
 $$
 
-因此成功轨迹的价值近似“距离完成还剩多少步”的负数，失败轨迹得到大负值。不同任务长度不同，作者按每项任务的最大 episode 长度把目标归一化到 \((-1,0)\)。价值网络使用约 670M、由 Gemma 3 初始化的较小 VLM，并混入少量网页多模态数据防止过拟合。[原文 §V-C](https://arxiv.org/html/2511.14759v2#S5.SS3)
+因此成功轨迹的价值近似“距离完成还剩多少步”的负数，失败轨迹得到大负值。不同任务长度不同，作者按每项任务的最大 episode 长度把目标归一化到 $(-1,0)$。价值网络使用约 670M、由 Gemma 3 初始化的较小 VLM，并混入少量网页多模态数据防止过拟合。[原文 §V-C](https://arxiv.org/html/2511.14759v2#S5.SS3)
 
 ### 4. 从价值到二值优势条件
 
-从价值函数计算 \(N\)-step 优势：
+从价值函数计算 $N$-step 优势：
 
 $$
 A^{\pi_{\mathrm{ref}}}(o_t,a_t,\ell)=
@@ -119,28 +119,28 @@ A^{\pi_{\mathrm{ref}}}(o_t,a_t,\ell)=
 -V^{\pi_{\mathrm{ref}}}(o_t,\ell).
 $$
 
-再用任务相关阈值 \(\epsilon_\ell\) 得到：
+再用任务相关阈值 $\epsilon_\ell$ 得到：
 
 $$
 I_t=\mathbf 1\!\left[A^{\pi_{\mathrm{ref}}}(o_t,a_t,\ell)>\epsilon_\ell\right].
 $$
 
-作者不是用优势给样本加权或删掉低分样本，而是让同一个策略同时建模无条件分布 \(\pi_\theta(a\mid o,\ell)\) 与“更优动作”条件分布 \(\pi_\theta(a\mid I,o,\ell)\)：
+作者不是用优势给样本加权或删掉低分样本，而是让同一个策略同时建模无条件分布 $\pi_\theta(a\mid o,\ell)$ 与“更优动作”条件分布 $\pi_\theta(a\mid I,o,\ell)$：
 
 $$
-\min_\theta\;\mathbb E_D\!left[
+\min_\theta\;\mathbb E_D\!\left[
 -\log\pi_\theta(a_t\mid o_t,\ell)
 -\alpha\log\pi_\theta(a_t\mid I_t,o_t,\ell)
 \right].
 $$
 
-在人类纠正片段中，作者强制 \(I_t=\mathrm{True}\)，相当于假设专家接管动作是正向纠正。实际实现以 30% 概率丢弃优势条件，既替代显式 \(\alpha\) 权衡，也使测试时可做 classifier-free guidance；主结果采用 \(\beta=1\)，附录中中等 CFG 强度为 \(\beta\in[1.5,2.5]\)。过大的 \(\beta\) 会把动作推向分布支撑边缘，产生过激运动。[原文 §IV-B 与 Appendix E–F](https://arxiv.org/html/2511.14759v2#S4.SS2)
+在人类纠正片段中，作者强制 $I_t=\mathrm{True}$，相当于假设专家接管动作是正向纠正。实际实现以 30% 概率丢弃优势条件，既替代显式 $\alpha$ 权衡，也使测试时可做 classifier-free guidance；主结果采用 $\beta=1$，附录中中等 CFG 强度为 $\beta\in[1.5,2.5]$。过大的 $\beta$ 会把动作推向分布支撑边缘，产生过激运动。[原文 §IV-B 与 Appendix E–F](https://arxiv.org/html/2511.14759v2#S4.SS2)
 
 ### 5. π0.6 到 π\*0.6
 
 基础 π0.6 使用 Gemma 3 4B VLM、860M 动作专家、Knowledge Insulation、FAST 离散动作和流匹配连续动作。π\*0.6 额外把 `Advantage: positive/negative` 文本放在预测子任务之后、动作之前，因此只影响离散与连续动作似然，不改变高层子任务预测。[原文 §V-A–B](https://arxiv.org/html/2511.14759v2#S5)
 
-连续动作以 50 Hz 生成 chunk。对真实动作 \(a\)、高斯噪声 \(\omega\) 和流时间 \(\eta\)，构造 \(a^{\eta,\omega}=\eta a+(1-\eta)\omega\)，动作专家预测向量场。总训练信号联合 FAST 的离散交叉熵与连续 flow-matching 损失，且动作专家到主 VLM 的梯度被 Knowledge Insulation 阻断。
+连续动作以 50 Hz 生成 chunk。对真实动作 $a$、高斯噪声 $\omega$ 和流时间 $\eta$，构造 $a^{\eta,\omega}=\eta a+(1-\eta)\omega$，动作专家预测向量场。总训练信号联合 FAST 的离散交叉熵与连续 flow-matching 损失，且动作专家到主 VLM 的梯度被 Knowledge Insulation 阻断。
 
 ### 6. 数据构成与真机采集量
 
@@ -177,7 +177,7 @@ $$
 
 ### 3. 多轮改进与策略提取对比
 
-简单衣物在第一轮后成功率即超过 90%，第二轮主要继续提升速度；纸箱需要更多数据，第二轮后 throughput 相对初始策略约翻倍，折箱与贴标阶段成功率约 90%。在完全使用相同 RECAP 数据的受控比较中，AWR 能获得尚可成功率但动作更慢，PPO 需要很小的 trust region（\(\eta=0.01\)）才稳定，二者 throughput 均明显低于优势条件方法。[原文 §VI-C2–C3](https://arxiv.org/html/2511.14759v2#S6.SS3)
+简单衣物在第一轮后成功率即超过 90%，第二轮主要继续提升速度；纸箱需要更多数据，第二轮后 throughput 相对初始策略约翻倍，折箱与贴标阶段成功率约 90%。在完全使用相同 RECAP 数据的受控比较中，AWR 能获得尚可成功率但动作更慢，PPO 需要很小的 trust region（$\eta=0.01$）才稳定，二者 throughput 均明显低于优势条件方法。[原文 §VI-C2–C3](https://arxiv.org/html/2511.14759v2#S6.SS3)
 
 ### 4. 特定失败模式消除
 
@@ -208,7 +208,7 @@ RECAP 给出了一条适合大 VLA 的真机强化学习路线：价值函数负
 - **不是并发 online RL**：系统按“收一批数据—重训—再部署”的离线循环运行，没有边采集边实时更新。
 - **价值估计器有偏**：它拟合累计数据的行为策略回报，而不是严格 off-policy Q；作者把更好的离策略估计列为未来方向。
 - **干预监督不完美**：接管本身会打断轨迹，专家纠正质量不一致，也很难仅靠接管改善整体速度。
-- **CFG 有安全边界**：较大 \(\beta\) 会把动作推到模型支撑边缘，可能产生过激运动。
+- **CFG 有安全边界**：较大 $\beta$ 会把动作推到模型支撑边缘，可能产生过激运动。
 - **RL 仍有样本效率、自治和延迟反馈难题**。[原文 Discussion](https://arxiv.org/html/2511.14759v2#S7)
 
 ### 额外局限

@@ -26,7 +26,7 @@ literature_topics: [llm]
 
 Transformer 的核心贡献并非笼统的“引入 attention”，而是把序列表示与生成中的循环/卷积路径全部替换为多头自注意力、逐位置前馈网络和位置编码。这样，每层训练时对序列位置可并行计算，任意两个位置之间的最大信息路径降为常数；代价是全局自注意力的时间与内存随长度呈平方增长。[正式论文 §3–4](https://papers.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
 
-直接证据来自 WMT 2014 翻译实验：Transformer-big 在英德任务取得 28.4 BLEU、英法取得 41.0 BLEU；作者估计的训练成本分别为 \(2.3\times10^{19}\) FLOPs，低于表中强 RNN/CNN 对照。但证据只覆盖特定翻译数据、tokenization、硬件与 beam-search 协议，不能单凭该论文断言 Transformer 在所有长度、模态或计算预算下都优于循环/卷积模型。
+直接证据来自 WMT 2014 翻译实验：Transformer-big 在英德任务取得 28.4 BLEU、英法取得 41.0 BLEU；作者估计的训练成本分别为 $2.3\times10^{19}$ FLOPs，低于表中强 RNN/CNN 对照。但证据只覆盖特定翻译数据、tokenization、硬件与 beam-search 协议，不能单凭该论文断言 Transformer 在所有长度、模态或计算预算下都优于循环/卷积模型。
 
 ## 检索记录
 
@@ -39,7 +39,7 @@ Transformer 的核心贡献并非笼统的“引入 attention”，而是把序�
 
 ## 研究背景
 
-2017 年主流神经机器翻译通常采用 encoder–decoder RNN/LSTM/GRU，attention 只是连接编码器与解码器的附加模块。循环状态 \(h_t=f(h_{t-1},x_t)\) 使单个样本内部必须按时间步串行计算；卷积虽可并行，却需要堆叠多层或扩张卷积才能连接远距离位置。论文把问题重新表述为：能否让每个 token 直接读取序列中所有相关 token，从而移除序列方向上的计算依赖？[正式论文 §1–2](https://papers.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
+2017 年主流神经机器翻译通常采用 encoder–decoder RNN/LSTM/GRU，attention 只是连接编码器与解码器的附加模块。循环状态 $h_t=f(h_{t-1},x_t)$ 使单个样本内部必须按时间步串行计算；卷积虽可并行，却需要堆叠多层或扩张卷积才能连接远距离位置。论文把问题重新表述为：能否让每个 token 直接读取序列中所有相关 token，从而移除序列方向上的计算依赖？[正式论文 §1–2](https://papers.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf)
 
 这一步对 LLM 路线尤其关键：GPT 实际采用的是 Transformer 的 **decoder stack + causal mask**，而不是本文完整的 encoder–decoder 翻译系统。理解二者关系，能避免把“Transformer”“decoder-only LM”和“GPT”当成同一个概念。
 
@@ -58,52 +58,52 @@ Transformer 的核心贡献并非笼统的“引入 attention”，而是把序�
 
 ### 1. 输入、输出与总体信息流
 
-输入和右移一位的目标序列分别映射为 \(d_{model}\) 维 token embedding，并与位置编码相加。encoder 输出一组上下文化表示 \(z_1,\ldots,z_n\)；decoder 在第 \(i\) 个位置只能读取目标前缀 \(y_{<i}\)，再通过 encoder–decoder attention 读取源序列，输出下一个 token 分布。
+输入和右移一位的目标序列分别映射为 $d_{model}$ 维 token embedding，并与位置编码相加。encoder 输出一组上下文化表示 $z_1,\ldots,z_n$；decoder 在第 $i$ 个位置只能读取目标前缀 $y_{<i}$，再通过 encoder–decoder attention 读取源序列，输出下一个 token 分布。
 
-base 模型的 encoder 与 decoder 各有 \(N=6\) 层，\(d_{model}=512\)。每个子层采用论文中的 **Post-LN** 形式：
+base 模型的 encoder 与 decoder 各有 $N=6$ 层，$d_{model}=512$。每个子层采用论文中的 **Post-LN** 形式：
 
-\[
+$$
 \operatorname{LayerNorm}\bigl(x+\operatorname{Sublayer}(x)\bigr).
-\]
+$$
 
 这一细节不能与后续 LLM 常用的 Pre-LN 混为一谈。
 
 ### 2. Scaled dot-product 与 multi-head attention
 
-对 query、key、value 矩阵 \(Q,K,V\)，单头注意力为
+对 query、key、value 矩阵 $Q,K,V$，单头注意力为
 
-\[
+$$
 \operatorname{Attention}(Q,K,V)
 =\operatorname{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}}\right)V.
-\]
+$$
 
-缩放项 \(1/\sqrt{d_k}\) 抑制大维度点积把 softmax 推入极小梯度区。多头注意力先以不同线性投影形成 \(h\) 个表示子空间，再拼接：
+缩放项 $1/\sqrt{d_k}$ 抑制大维度点积把 softmax 推入极小梯度区。多头注意力先以不同线性投影形成 $h$ 个表示子空间，再拼接：
 
-\[
+$$
 \operatorname{MultiHead}(Q,K,V)
 =\operatorname{Concat}(head_1,\ldots,head_h)W^O,
-\]
+$$
 
-\[
+$$
 head_i=\operatorname{Attention}(QW_i^Q,KW_i^K,VW_i^V).
-\]
+$$
 
-base 使用 \(h=8\)，因此每头 \(d_k=d_v=64\)。encoder self-attention 的 Q/K/V 均来自上一层；decoder causal self-attention 把未来位置 logits 置为 \(-\infty\)；cross-attention 的 query 来自 decoder，key/value 来自 encoder。
+base 使用 $h=8$，因此每头 $d_k=d_v=64$。encoder self-attention 的 Q/K/V 均来自上一层；decoder causal self-attention 把未来位置 logits 置为 $-\infty$；cross-attention 的 query 来自 decoder，key/value 来自 encoder。
 
 ### 3. FFN、位置与输出
 
 每个位置独立共享两层 MLP：
 
-\[
+$$
 \operatorname{FFN}(x)=\max(0,xW_1+b_1)W_2+b_2,
-\]
+$$
 
-其中 \(d_{ff}=2048\)。论文共享源 embedding、目标 embedding 与 pre-softmax 线性层的权重。由于没有 recurrence/convolution，位置由正弦函数注入：
+其中 $d_{ff}=2048$。论文共享源 embedding、目标 embedding 与 pre-softmax 线性层的权重。由于没有 recurrence/convolution，位置由正弦函数注入：
 
-\[
+$$
 PE_{(pos,2i)}=\sin(pos/10000^{2i/d_{model}}),\qquad
 PE_{(pos,2i+1)}=\cos(pos/10000^{2i/d_{model}}).
-\]
+$$
 
 表 3 中 learned positional embedding 与 sinusoidal encoding 的 dev BLEU 为 25.7 与 25.8，接近到不足以证明后者更优；作者选正弦形式主要基于长度外推假设，而不是直接外推实验。
 
@@ -113,8 +113,8 @@ PE_{(pos,2i+1)}=\cos(pos/10000^{2i/d_{model}}).
 - 英法：WMT 2014，约 3600 万句对，32k word-piece 词表。
 - base：约 65M 参数，100k steps，8×P100 约 12 小时。
 - big：约 213M 参数，300k steps，8×P100 约 3.5 天。
-- Adam：\(\beta_1=0.9,\beta_2=0.98,\varepsilon=10^{-9}\)；4000-step warmup 后按 \(step^{-1/2}\) 衰减。
-- 正则：residual dropout、label smoothing \(\varepsilon_{ls}=0.1\)。
+- Adam：$\beta_1=0.9,\beta_2=0.98,\varepsilon=10^{-9}$；4000-step warmup 后按 $step^{-1/2}$ 衰减。
+- 正则：residual dropout、label smoothing $\varepsilon_{ls}=0.1$。
 
 ### 5. 推理边界
 
@@ -134,14 +134,14 @@ Transformer-big 在 EN–DE newstest2014 达到 28.4 BLEU，高于表中最强 e
 
 ### 组件变体
 
-表 3 在 EN–DE newstest2013 上显示：单头为 24.9 BLEU，而 8/16 头均为 25.8；32 头下降至 25.4。在大致固定计算下，这支持“多个表示子空间有益，但头越多并非越好”。缩小 \(d_k\)、减少层数/宽度也会退化；去掉 dropout 从 25.8 降至 24.6，说明该规模下过拟合控制重要。
+表 3 在 EN–DE newstest2013 上显示：单头为 24.9 BLEU，而 8/16 头均为 25.8；32 头下降至 25.4。在大致固定计算下，这支持“多个表示子空间有益，但头越多并非越好”。缩小 $d_k$、减少层数/宽度也会退化；去掉 dropout 从 25.8 降至 24.6，说明该规模下过拟合控制重要。
 
 但这些是同一任务、单套训练预算下的内部变体；并未逐项给出多随机种子或置信区间，0.1–0.4 BLEU 的差异不宜过度解释。
 
 ## 主要发现
 
 1. **完全由 attention 组成的序列转导架构是可行的。** 论文在两个 WMT 任务上给出完整系统证据。
-2. **效率收益来自计算图变化。** self-attention 每层只需 \(O(1)\) 次串行操作、任意位置路径长度为 \(O(1)\)，但复杂度为 \(O(n^2d)\)。
+2. **效率收益来自计算图变化。** self-attention 每层只需 $O(1)$ 次串行操作、任意位置路径长度为 $O(1)$，但复杂度为 $O(n^2d)$。
 3. **多头不是简单复制。** 固定总体维度时，单头明显较差；过多且过窄的头也退化。
 4. **位置编码结论很窄。** learned 与 sinusoidal 在训练长度内几乎相同；论文未直接验证超长外推。
 5. **LLM 路线只继承其中一半。** GPT 保留 masked decoder self-attention 与 FFN，去掉 encoder 和 cross-attention，改为纯 next-token 语言建模。
@@ -160,7 +160,7 @@ Transformer-big 在 EN–DE newstest2014 达到 28.4 BLEU，高于表中最强 e
 
 ### 作者明确报告的局限
 
-- 全局 self-attention 为 \(O(n^2d)\)，超长输入可能需要 restricted/local attention。
+- 全局 self-attention 为 $O(n^2d)$，超长输入可能需要 restricted/local attention。
 - 自回归生成仍是串行的；作者把减少生成串行性列为未来方向。
 - 实验集中于机器翻译；其他任务和模态尚未系统验证。
 - 注意力可视化显示部分句法/语义模式，但这只是案例，不能等同于可靠解释。
@@ -170,7 +170,7 @@ Transformer-big 在 EN–DE newstest2014 达到 28.4 BLEU，高于表中最强 e
 - 没有多随机种子、方差或统计检验；小 BLEU 差异的稳定性未知。
 - 与外部基线的 tokenization、代码成熟度、硬件利用率并非完全控制变量；表 2 只能评价整套 recipe。
 - 位置编码的长度外推是动机而非实验证明。
-- \(O(n^2)\) 的内存瓶颈在论文句长上尚不突出，却成为后续长上下文模型的核心限制。
+- $O(n^2)$ 的内存瓶颈在论文句长上尚不突出，却成为后续长上下文模型的核心限制。
 - Tensor2Tensor 已归档且依赖旧 TensorFlow；今天复现时需要固定历史环境，不能把现代框架结果直接当作论文复现。
 
 ## 与 GPT / LLM 路线的关系

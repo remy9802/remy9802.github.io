@@ -71,7 +71,7 @@ literature_topics: [world-model, model-based-rl, self-supervised-learning, embod
 
 ### 一、功能定义：世界模型必须支持“如果我这样做，会怎样”
 
-令观测为 \(o_t\)、动作为 \(a_t\)、奖励为 \(r_t\)，历史压缩后的潜状态为 \(z_t\)。最一般的动作条件模型可写为：
+令观测为 $o_t$、动作为 $a_t$、奖励为 $r_t$，历史压缩后的潜状态为 $z_t$。最一般的动作条件模型可写为：
 
 $$
 z_t=E(o_{\le t},a_{<t}),\qquad
@@ -79,7 +79,7 @@ z_t=E(o_{\le t},a_{<t}),\qquad
 (\hat r_t,\hat v_t,\hat o_t)=G(z_t).
 $$
 
-具体方法不必同时拥有所有输出。只要 \(\hat z_{t+1}\)、奖励、价值或目标距离足以比较动作后果，模型就能支持控制。反过来，只会预测自然视频而不接收动作的模型，可能是优秀表征学习器，却还不是可进行干预推理的控制模型。
+具体方法不必同时拥有所有输出。只要 $\hat z_{t+1}$、奖励、价值或目标距离足以比较动作后果，模型就能支持控制。反过来，只会预测自然视频而不接收动作的模型，可能是优秀表征学习器，却还不是可进行干预推理的控制模型。
 
 ### 二、四种常被混称为“世界模型”的对象
 
@@ -96,7 +96,7 @@ $$
 
 ### 1. 从 World Models 到 PlaNet：先学潜空间，再在其中规划
 
-[World Models](https://proceedings.neurips.cc/paper/2018/hash/2de5d16682c3c35007e4e92982f1a2ba-Abstract.html) 建立了早期模块化范式：VAE 将图像压缩为潜变量，MDN-RNN 预测潜状态的混合高斯分布，线性 controller 再由 CMA-ES 优化。它最重要的贡献不是某个网络结构，而是证明策略可以在学习到的“梦境”里训练。然而 Doom 实验也直接暴露了模型利用问题：当温度过低、虚拟环境过于确定时，策略在模型中得分 (2086\pm140)，回到真实环境却只有 (193\pm58)。这说明 agent 会主动寻找模型误差，而非被动承受误差。CarRacing 上 (906\pm21) 的结果证明了路线可行，但控制器、表征和动力学被分阶段训练，任务规模仍很小。
+[World Models](https://proceedings.neurips.cc/paper/2018/hash/2de5d16682c3c35007e4e92982f1a2ba-Abstract.html) 建立了早期模块化范式：VAE 将图像压缩为潜变量，MDN-RNN 预测潜状态的混合高斯分布，线性 controller 再由 CMA-ES 优化。它最重要的贡献不是某个网络结构，而是证明策略可以在学习到的“梦境”里训练。然而 Doom 实验也直接暴露了模型利用问题：当温度过低、虚拟环境过于确定时，策略在模型中得分 $2086\pm140$，回到真实环境却只有 $193\pm58$。这说明 agent 会主动寻找模型误差，而非被动承受误差。CarRacing 上 $906\pm21$ 的结果证明了路线可行，但控制器、表征和动力学被分阶段训练，任务规模仍很小。
 
 [PlaNet](https://proceedings.mlr.press/v97/hafner19a.html) 将确定性记忆与随机状态合并为 Recurrent State-Space Model（RSSM）：
 
@@ -106,11 +106,11 @@ s_t\sim p(s_t\mid h_t),\qquad
 o_t\sim p(o_t\mid h_t,s_t).
 $$
 
-确定性路径 (h_t) 保存长期信息，随机变量 (s_t) 表示不确定性；模型还学习奖励预测。部署时，PlaNet 每一步用 Cross-Entropy Method（CEM）在潜空间优化动作序列，只执行第一个动作后重新规划。论文在 6 个视觉 DeepMind Control 任务中，用约 (10^3) 个 episode 达到或超过无模型 D4PG 约 (10^5) 个 episode 的表现；“约 200 倍数据效率”来自学习曲线的量级比较，不应解释为所有任务严格同倍率。
+确定性路径 $h_t$ 保存长期信息，随机变量 $s_t$ 表示不确定性；模型还学习奖励预测。部署时，PlaNet 每一步用 Cross-Entropy Method（CEM）在潜空间优化动作序列，只执行第一个动作后重新规划。论文在 6 个视觉 DeepMind Control 任务中，用约 $10^3$ 个 episode 达到或超过无模型 D4PG 约 $10^5$ 个 episode 的表现；“约 200 倍数据效率”来自学习曲线的量级比较，不应解释为所有任务严格同倍率。
 
 ### 2. Dreamer 1–3：把在线规划摊销为想象中的 actor–critic
 
-[Dreamer](https://arxiv.org/abs/1912.01603) 沿用连续高斯 RSSM，但改变了模型的使用方式。它从真实 replay 编码状态，在模型中 rollout 多步潜轨迹，再用预测奖励和价值训练 actor–critic。actor 最大化想象回报，critic 拟合多步 \(\lambda\)-return；部署时直接执行 actor，不再像 PlaNet 那样对每一步运行 CEM。20 个视觉控制任务上，Dreamer 的平均得分为 823.39，高于论文重跑的 PlaNet 332.97，也高于使用约 20 倍真实交互的 D4PG 786.32。不过这些比较来自论文统一实现与当时协议，不能跨后续 benchmark 直接换算。
+[Dreamer](https://arxiv.org/abs/1912.01603) 沿用连续高斯 RSSM，但改变了模型的使用方式。它从真实 replay 编码状态，在模型中 rollout 多步潜轨迹，再用预测奖励和价值训练 actor–critic。actor 最大化想象回报，critic 拟合多步 $\lambda$-return；部署时直接执行 actor，不再像 PlaNet 那样对每一步运行 CEM。20 个视觉控制任务上，Dreamer 的平均得分为 823.39，高于论文重跑的 PlaNet 332.97，也高于使用约 20 倍真实交互的 D4PG 786.32。不过这些比较来自论文统一实现与当时协议，不能跨后续 benchmark 直接换算。
 
 [DreamerV2](https://arxiv.org/abs/2010.02193) 的核心变化是将连续潜变量替换为 32 组、每组 32 类的离散随机变量，并用 straight-through gradient 训练。其 KL balancing 把 posterior 学习先验和先验追随 posterior 的梯度分开：
 
@@ -148,11 +148,11 @@ $$
 
 [TD-MPC2](https://proceedings.iclr.cc/paper_files/paper/2024/hash/cf73d57b6dcda32b293df7c2d5341f49-Abstract-Conference.html) 面向连续控制，联合学习 encoder、潜动力学、奖励、terminal Q 与 policy prior，并通过 SimNorm、离散化 reward/value 回归和 Q ensemble 提升稳定性。部署时用 MPPI 优化短动作序列，目标是预测奖励加 horizon 末端 Q；每步只执行首动作并闭环重规划。80 任务离线多任务实验中，模型从 1M 参数的 16.0 分扩展到 317M 参数的 70.6 分。关键消融更能说明机制：仅 policy 得 42.2，仅 planning 得 53.7，planning 加 policy 得 54.2，因而行为主要来自决策时规划，policy 只是采样先验。
 
-TD-MPC2 覆盖 104 个在线连续控制任务和 80 个离线多任务任务，但全部为仿真，视觉设置仅包含少量 \(64\times64\) 任务。它需要人工任务奖励，MPPI 也局限于连续动作；论文明确提醒 reward misspecification、离线覆盖不足和真机安全风险。
+TD-MPC2 覆盖 104 个在线连续控制任务和 80 个离线多任务任务，但全部为仿真，视觉设置仅包含少量 $64\times64$ 任务。它需要人工任务奖励，MPPI 也局限于连续动作；论文明确提醒 reward misspecification、离线覆盖不足和真机安全风险。
 
 ### 5. JEPA：预测“可预测的抽象”，而不是每个像素
 
-[JEPA 立场文章](https://openreview.net/forum?id=BZ5a1r-kVsf) 提议：与其生成观测空间里所有不可预测细节，不如在表征空间预测与任务有关、结构更稳定的未来。抽象地写，context encoder 生成 \(z_x\)，target encoder 生成 \(z_y\)，predictor 用 context、mask 或动作预测目标：
+[JEPA 立场文章](https://openreview.net/forum?id=BZ5a1r-kVsf) 提议：与其生成观测空间里所有不可预测细节，不如在表征空间预测与任务有关、结构更稳定的未来。抽象地写，context encoder 生成 $z_x$，target encoder 生成 $z_y$，predictor 用 context、mask 或动作预测目标：
 
 $$
 \hat z_y=P(z_x,m,a),\qquad

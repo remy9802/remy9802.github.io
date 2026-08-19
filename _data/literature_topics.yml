@@ -22,6 +22,10 @@
   label: 具身
   description: 具身智能、机器人操作、导航与环境交互
 
+- id: vln
+  label: VLN
+  description: 视觉语言导航、语言条件路径规划、连续环境控制与导航世界模型
+
 - id: vla
   label: VLA
   description: 从视觉和语言输入生成物理动作的模型

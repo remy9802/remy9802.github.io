@@ -46,7 +46,7 @@ redirect_from:
 
 ## MathJax
 
-Support for MathJax (version 3.* via [jsDelivr](https://www.jsdelivr.com/), [documentation](https://docs.mathjax.org/en/latest/)) is included in the template:
+Support for MathJax 4 via [jsDelivr](https://www.jsdelivr.com/) ([documentation](https://docs.mathjax.org/en/latest/)) is included in the template:
 
 $$
 \displaylines{
@@ -57,11 +57,18 @@ $$
 }
 $$
 
-The default delimiters of `$$...$$` and `\\[...\\]` are supported for displayed mathematics, while `\\(...\\)` should be used for in-line mathematics (ex., \\(a^2 + b^2 = c^2\\))
+Use `$$...$$` for displayed mathematics and `$...$` for inline mathematics, for example `$a^2 + b^2 = c^2$`.
 
-**Note** that since Academic Pages uses Markdown which cases some interference with MathJax and LaTeX for escaping characters and new lines, although [some workarounds exist](https://math.codidact.com/posts/278763/278772#answer-278772). In some cases, such as when you are including MathJax in a `citation` field for publications, it may be necessary to use `\(...\)` for inline delineation.
+**Note:** Academic Pages parses Markdown with Kramdown before MathJax runs. A single-backslash delimiter such as `\(...\)` or `\[...\]` is treated as a Markdown escape and loses its backslash. Prefer `$...$` / `$$...$$` in post source; if a backslash delimiter is unavoidable, double-escape it as `\\(...\\)` / `\\[...\\]`. Write currency as `USD 5` rather than using an unpaired dollar sign.
 
 ## Mermaid diagrams
+
+### 博客配图约定
+
+- Mermaid 只用于作者补充绘制的方法流程、分类关系、系统结构或推理链，作为辅助解释图。
+- 文献笔记中的论文原始图表必须继续保留本地原图或裁图、原图编号、来源说明及论文链接；Mermaid 不得替换、覆盖或重绘原论文图表。
+- 同一节同时出现论文原图和 Mermaid 时，分别标注“来源：原论文 Figure/Table ……”与“作者整理”，明确区分论文证据和辅助解释。
+
 Academic Pages includes support for [Mermaid diagrams](https://mermaid.js.org/) (version 11.* via [jsDelivr](https://www.jsdelivr.com/)) and in addition to their [tutorials](https://mermaid.js.org/ecosystem/tutorials.html) and [GitHub documentation](https://github.com/mermaid-js/mermaid) the basic syntax is as follows:
 
 ```markdown
@@ -452,4 +459,3 @@ This allows you to denote <var>variables</var>.
 **Footnotes**
 
 The footnotes in the page will be returned following this line, return to the section on <a href="#footnotes">Markdown Footnotes</a>.
-

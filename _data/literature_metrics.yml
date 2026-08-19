@@ -1,10 +1,11 @@
 # 文献列表使用的可刷新指标快照。
 # 引用数是动态数据库指标，不代表论文质量，也不等同于严格他引数。
+# citation_count_as_of 是默认日期；较晚补录的论文可在各自条目中覆盖。
 citation_source: "Semantic Scholar"
 citation_count_as_of: "2026-08-18"
-paper_count: 52
-paper_year_coverage: 52
-citation_count_coverage: 49
+paper_count: 69
+paper_year_coverage: 69
+citation_count_coverage: 61
 papers:
   attention-is-all-you-need:
     paper_year: 2017
@@ -155,6 +156,8 @@ papers:
     citation_count: 4534
     citation_source_id: "41a66997ce0a366bba3becf7c3f37c9aebb13fbd"
     citation_url: "https://www.semanticscholar.org/paper/41a66997ce0a366bba3becf7c3f37c9aebb13fbd"
+  motionwam:
+    paper_year: 2026
   opendrivevla:
     paper_year: 2026
     citation_count: 189
@@ -222,6 +225,12 @@ papers:
     citation_count: 1922
     citation_source_id: "15538df854dd33351dfb5cefd7e8f3340c8936c3"
     citation_url: "https://www.semanticscholar.org/paper/15538df854dd33351dfb5cefd7e8f3340c8936c3"
+  qwen-robotmanip:
+    paper_year: 2026
+  qwen-robotnav:
+    paper_year: 2026
+  qwen-robotworld:
+    paper_year: 2026
   reasoning-vla:
     paper_year: 2026
     citation_count: 13
@@ -259,3 +268,77 @@ papers:
     citation_count: 0
     citation_source_id: "ac052a8aa52a8a7550660bcbd49325827d9e0752"
     citation_url: "https://www.semanticscholar.org/paper/ac052a8aa52a8a7550660bcbd49325827d9e0752"
+  r2r-vln:
+    paper_year: 2018
+    citation_count: 1905
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "c37c23b12e00168833eccff8025a830ce27c5abc"
+    citation_url: "https://www.semanticscholar.org/paper/c37c23b12e00168833eccff8025a830ce27c5abc"
+  speaker-follower-vln:
+    paper_year: 2018
+    citation_count: 644
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "893186c6bc08a17cb3f9f94fa3f14e9ad20b0525"
+    citation_url: "https://www.semanticscholar.org/paper/893186c6bc08a17cb3f9f94fa3f14e9ad20b0525"
+  rxr-vln:
+    paper_year: 2020
+    citation_count: 566
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "5a94aaa3ad624608e46a75de49452a03de568a07"
+    citation_url: "https://www.semanticscholar.org/paper/5a94aaa3ad624608e46a75de49452a03de568a07"
+  vln-ce:
+    paper_year: 2020
+    citation_count: 614
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "c2496cead9423897cd37be77ddd6cf2f5d03f1c8"
+    citation_url: "https://www.semanticscholar.org/paper/c2496cead9423897cd37be77ddd6cf2f5d03f1c8"
+  prevalent-vln:
+    paper_year: 2020
+    citation_count: 373
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "6fa25c94e41a0c90e3aabe80cf60f59ec9ff0a52"
+    citation_url: "https://www.semanticscholar.org/paper/6fa25c94e41a0c90e3aabe80cf60f59ec9ff0a52"
+  hamt-vln:
+    paper_year: 2021
+    citation_count: 404
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "6f681faaa985ed38bc9b30777d57d9e1e3765861"
+    citation_url: "https://www.semanticscholar.org/paper/6f681faaa985ed38bc9b30777d57d9e1e3765861"
+  waypoint-models-vln-ce:
+    paper_year: 2021
+    citation_count: 185
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "ceba50cc71df6024abcdb06158ca4b6dd1fa50fa"
+    citation_url: "https://www.semanticscholar.org/paper/ceba50cc71df6024abcdb06158ca4b6dd1fa50fa"
+  duet-vln:
+    paper_year: 2022
+    citation_count: 294
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "0f01088765729402e903ec560f3246f884d324f8"
+    citation_url: "https://www.semanticscholar.org/paper/0f01088765729402e903ec560f3246f884d324f8"
+  bevbert-vln:
+    paper_year: 2023
+    citation_count: 167
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "d7abc3bcf368c7c0e3487da7cecae1ac209a7284"
+    citation_url: "https://www.semanticscholar.org/paper/d7abc3bcf368c7c0e3487da7cecae1ac209a7284"
+  dreamwalker-vln:
+    paper_year: 2023
+  navid-vln:
+    paper_year: 2024
+    citation_count: 285
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "12693672913f00a32b31fe68a3d0d3d4c40cc352"
+    citation_url: "https://www.semanticscholar.org/paper/12693672913f00a32b31fe68a3d0d3d4c40cc352"
+  vln-r1:
+    paper_year: 2025
+    citation_count: 69
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "c0769f42c71a091546bc1c8966e50e9b8efae476"
+    citation_url: "https://www.semanticscholar.org/paper/c0769f42c71a091546bc1c8966e50e9b8efae476"
+  worldvln:
+    paper_year: 2026
+    citation_count: 5
+    citation_count_as_of: "2026-08-19"
+    citation_source_id: "88892e6d65be7c61f6e9ae889ea48c1de1678e48"
+    citation_url: "https://www.semanticscholar.org/paper/88892e6d65be7c61f6e9ae889ea48c1de1678e48"

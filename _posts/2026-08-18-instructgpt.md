@@ -26,7 +26,7 @@ literature_topics: [llm]
 
 InstructGPT 把语言模型后训练明确拆为三步：监督微调（SFT）学习示范、reward model（RM）学习成对偏好、PPO 在 KL 约束下优化策略，并混入 pretraining gradient 减轻“alignment tax”。[原论文 Figure 2 / §3](https://arxiv.org/pdf/2203.02155)
 
-在 held-out API prompt 分布上，175B InstructGPT 相对 175B GPT-3 的人类偏好率为 \(85\pm3\%\)，相对 carefully prompted GPT-3 为 \(71\pm4\%\)；甚至 1.3B InstructGPT 在 Figure 1 中优于 175B GPT-3。这个结果证明少量高相关人类反馈可以比单纯扩大预训练模型更有效地改变交互行为。但它不是“普遍人类价值对齐”：反馈来自约 40 名筛选后的英语标注者、OpenAI 研究规范与特定 API 客户分布；偏见未改善，有害指令仍可能被执行。
+在 held-out API prompt 分布上，175B InstructGPT 相对 175B GPT-3 的人类偏好率为 $85\pm3\%$，相对 carefully prompted GPT-3 为 $71\pm4\%$；甚至 1.3B InstructGPT 在 Figure 1 中优于 175B GPT-3。这个结果证明少量高相关人类反馈可以比单纯扩大预训练模型更有效地改变交互行为。但它不是“普遍人类价值对齐”：反馈来自约 40 名筛选后的英语标注者、OpenAI 研究规范与特定 API 客户分布；偏见未改善，有害指令仍可能被执行。
 
 ## 检索记录
 
@@ -68,7 +68,7 @@ GPT-3 的预训练目标是预测互联网文本的下一 token，而用户期�
 | RM | 约 33k | 同一 prompt 的输出排序 | 学习标量偏好奖励 |
 | PPO | 约 31k | 无直接人类标签 | 策略 rollout / RLHF |
 
-数据超过 96% 为英语。约 40 名标注者来自 Upwork/Scale AI，经敏感内容与研究者一致性筛选；训练标注者互相同意率 \(72.6\pm1.5\%\)，held-out 标注者为 \(77.3\pm1.3\%\)。多数比较因成本只由一人标注，分歧不会被完整观察。[原论文 §3.2–3.4](https://arxiv.org/pdf/2203.02155)
+数据超过 96% 为英语。约 40 名标注者来自 Upwork/Scale AI，经敏感内容与研究者一致性筛选；训练标注者互相同意率 $72.6\pm1.5\%$，held-out 标注者为 $77.3\pm1.3\%$。多数比较因成本只由一人标注，分歧不会被完整观察。[原论文 §3.2–3.4](https://arxiv.org/pdf/2203.02155)
 
 ### 2. SFT：先模仿理想响应
 
@@ -78,32 +78,32 @@ GPT-3 的预训练目标是预测互联网文本的下一 token，而用户期�
 
 ### 3. RM：从排序学习标量奖励
 
-对每个 prompt，标注者排序 \(K=4\sim9\) 个模型 completion，由此产生 \(\binom K2\) 个成对偏好。RM 从 SFT 主干去掉 unembedding，输入 \((x,y)\) 输出标量 \(r_\theta(x,y)\)。损失为 Bradley–Terry / logistic 形式：
+对每个 prompt，标注者排序 $K=4\sim9$ 个模型 completion，由此产生 $\binom K2$ 个成对偏好。RM 从 SFT 主干去掉 unembedding，输入 $(x,y)$ 输出标量 $r_\theta(x,y)$。损失为 Bradley–Terry / logistic 形式：
 
-\[
+$$
 \mathcal L_{RM}(\theta)
 =-\frac{1}{\binom K2}
 \mathbb E_{(x,y_w,y_l)\sim D}
 \left[\log \sigma\bigl(r_\theta(x,y_w)-r_\theta(x,y_l)\bigr)\right].
-\]
+$$
 
-\(y_w\) 为偏好输出，\(y_l\) 为较差输出。高度相关的 pair 不被打散成独立数据，而把同一 prompt 的所有 pair 放入同一 batch element，避免一个 epoch 内重复使用同一 completion 导致过拟合。最终只使用 6B RM：175B RM 训练不稳定，且用作 PPO value function 成本更高。RL 前用 bias 把标注者示范的平均 reward 归零。
+$y_w$ 为偏好输出，$y_l$ 为较差输出。高度相关的 pair 不被打散成独立数据，而把同一 prompt 的所有 pair 放入同一 batch element，避免一个 epoch 内重复使用同一 completion 导致过拟合。最终只使用 6B RM：175B RM 训练不稳定，且用作 PPO value function 成本更高。RL 前用 bias 把标注者示范的平均 reward 归零。
 
 ### 4. PPO 与 KL 约束
 
-环境是单步 contextual bandit：采样 prompt \(x\)，策略 \(\pi_\phi^{RL}\) 生成 completion \(y\)，RM 给出终局奖励。除 PPO clipping/value learning 外，论文在每个 token 对 SFT reference 加 KL penalty，抑制策略远离人类示范分布和过度优化 RM。
+环境是单步 contextual bandit：采样 prompt $x$，策略 $\pi_\phi^{RL}$ 生成 completion $y$，RM 给出终局奖励。除 PPO clipping/value learning 外，论文在每个 token 对 SFT reference 加 KL penalty，抑制策略远离人类示范分布和过度优化 RM。
 
 纯 PPO 仍使若干公开 NLP benchmark 回退，于是 PPO-ptx 混入预训练梯度，目标可写为
 
-\[
+$$
 \begin{aligned}
 J(\phi)=&\ \mathbb E_{(x,y)\sim D_{\pi_\phi^{RL}}}
 \left[r_\theta(x,y)-\beta\log\frac{\pi_\phi^{RL}(y\mid x)}{\pi^{SFT}(y\mid x)}\right] \\
 &+\gamma\,\mathbb E_{x\sim D_{pretrain}}\left[\log\pi_\phi^{RL}(x)\right].
 \end{aligned}
-\]
+$$
 
-\(\beta\) 控制 reference KL，\(\gamma\) 控制 pretraining mix；PPO 中 \(\gamma=0\)，论文默认“InstructGPT”指 PPO-ptx。这里的 PPO 不是直接从人类实时反馈学习，而是优化一个已拟合且可能被 exploit 的 reward proxy。
+$\beta$ 控制 reference KL，$\gamma$ 控制 pretraining mix；PPO 中 $\gamma=0$，论文默认“InstructGPT”指 PPO-ptx。这里的 PPO 不是直接从人类实时反馈学习，而是优化一个已拟合且可能被 exploit 的 reward proxy。
 
 ### 5. 基线与评估
 
@@ -117,9 +117,9 @@ J(\phi)=&\ \mathbb E_{(x,y)\sim D_{\pi_\phi^{RL}}}
 
 ### 人类偏好与规模
 
-在 API prompt 测试分布中，175B InstructGPT 对同规模 GPT-3 的直接胜率为 \(85\pm3\%\)，对 carefully prompted GPT-3 为 \(71\pm4\%\)。Figure 1 还显示 1.3B PPO-ptx 胜过 175B GPT-3，支持“对齐数据可比 100× 参数差更影响交互偏好”。[原论文 §4.1](https://arxiv.org/pdf/2203.02155)
+在 API prompt 测试分布中，175B InstructGPT 对同规模 GPT-3 的直接胜率为 $85\pm3\%$，对 carefully prompted GPT-3 为 $71\pm4\%$。Figure 1 还显示 1.3B PPO-ptx 胜过 175B GPT-3，支持“对齐数据可比 100× 参数差更影响交互偏好”。[原论文 §4.1](https://arxiv.org/pdf/2203.02155)
 
-held-out labeler 对 InstructGPT 的偏好趋势与训练 labeler 相近；五折按标注者划分的 RM，在 held-out group 上偏好预测 accuracy 为 \(69.6\pm0.9\%\)，训练 group 为 \(72.4\pm0.4\%\)。这是对同一供应商/相近招募流程的泛化，不等于对全球用户价值的泛化。
+held-out labeler 对 InstructGPT 的偏好趋势与训练 labeler 相近；五折按标注者划分的 RM，在 held-out group 上偏好预测 accuracy 为 $69.6\pm0.9\%$，训练 group 为 $72.4\pm0.4\%$。这是对同一供应商/相近招募流程的泛化，不等于对全球用户价值的泛化。
 
 ### 真实性、幻觉与毒性
 
@@ -133,7 +133,7 @@ RealToxicityPrompts 中，加入“安全、尊重”指令时 InstructGPT 的 t
 
 ### API 数据 vs 公共 instruction tuning
 
-175B InstructGPT 相对作者训练的 FLAN/T0 基线，人类偏好率为 \(78\pm4\%\) / \(79\pm4\%\)。论文解释为 API 分布中开放生成/brainstorming 约 57%，classification+QA 约 18%，公开 NLP mixture 与真实使用结构不匹配。这证明的是 **分布匹配的重要性**，不能证明 RLHF 天生优于所有 instruction tuning，因为训练数据量、来源、目标和 model selection 都不同。
+175B InstructGPT 相对作者训练的 FLAN/T0 基线，人类偏好率为 $78\pm4\%$ / $79\pm4\%$。论文解释为 API 分布中开放生成/brainstorming 约 57%，classification+QA 约 18%，公开 NLP mixture 与真实使用结构不匹配。这证明的是 **分布匹配的重要性**，不能证明 RLHF 天生优于所有 instruction tuning，因为训练数据量、来源、目标和 model selection 都不同。
 
 ### 计算成本
 

@@ -72,7 +72,7 @@ literature_topics: [embodied-ai, vla]
 
 ### 2. 视觉语言骨干与注意力结构
 
-模型的视觉语言部分由图中所示的 400M SigLIP 视觉编码器与 Gemma 3 4B 骨干组成，另有约 860M 参数的动作专家。预训练时最多输入四幅 (448\times448) 图像：一个基座相机、最多两个腕部相机，以及移动机器人的可选后向相机。[模型卡 §2](https://website.pi-asset.com/pi06star/PI06_model_card.pdf#page=1)
+模型的视觉语言部分由图中所示的 400M SigLIP 视觉编码器与 Gemma 3 4B 骨干组成，另有约 860M 参数的动作专家。预训练时最多输入四幅 $448\times448$ 图像：一个基座相机、最多两个腕部相机，以及移动机器人的可选后向相机。[模型卡 §2](https://website.pi-asset.com/pi06star/PI06_model_card.pdf#page=1)
 
 视觉编码后的图像 token 与语言提示、token 化本体状态拼接。注意力掩码按模态区分：
 
@@ -82,7 +82,7 @@ literature_topics: [embodied-ai, vla]
 
 ### 3. Knowledge Insulation
 
-Knowledge Insulation 的关键是训练信号隔离。设 VLM 参数为 \(\theta_v\)，连续动作专家参数为 \(\theta_a\)，整体损失可概念化为：
+Knowledge Insulation 的关键是训练信号隔离。设 VLM 参数为 $\theta_v$，连续动作专家参数为 $\theta_a$，整体损失可概念化为：
 
 $$
 \mathcal{L}=\mathcal{L}_{\mathrm{FAST}}(\theta_v)
@@ -90,7 +90,7 @@ $$
 +\mathcal{L}_{\mathrm{FM}}(\operatorname{sg}[h_{\theta_v}],\theta_a),
 $$
 
-其中 \(\operatorname{sg}\) 表示 stop-gradient。动作专家能读取 VLM 隐状态，但 \(\mathcal{L}_{\mathrm{FM}}\) 的梯度不回流到主 VLM；VLM 由 FAST token 与网页多模态共训练目标更新。这样试图避免连续动作回归破坏 VLM 已学到的语言与视觉知识。[模型卡 §2](https://website.pi-asset.com/pi06star/PI06_model_card.pdf#page=1)
+其中 $\operatorname{sg}$ 表示 stop-gradient。动作专家能读取 VLM 隐状态，但 $\mathcal{L}_{\mathrm{FM}}$ 的梯度不回流到主 VLM；VLM 由 FAST token 与网页多模态共训练目标更新。这样试图避免连续动作回归破坏 VLM 已学到的语言与视觉知识。[模型卡 §2](https://website.pi-asset.com/pi06star/PI06_model_card.pdf#page=1)
 
 ### 4. 元数据条件与推理速度
 

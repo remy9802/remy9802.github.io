@@ -29,7 +29,7 @@ Faster-WAM 对 Fast-WAM 的结论作了一个重要修正：训练期视频 co-t
 
 性能并没有以 Joint-WAM 的延迟为代价。在 L20、224×448 输入、10 个动作去噪步的同机测量中，Joint-WAM 为 559.84 ms，Fast-WAM 为 320.97 ms，Faster-WAM 为 252.95 ms；后者相对 Joint-WAM 快 2.21×，甚至比 current-only Fast-WAM 更快。原因是一次视频 K/V 构建只增加约 15 ms，而 SparseMoT 把反复 action denoising 的开销从 276.56 ms 降到 192.11 ms。[原论文 Table 4、Appendix Table A4](https://arxiv.org/pdf/2608.04404)
 
-最容易误读的一点是：Faster-WAM 的“未来条件”不是一段已经生成好的未来视频。默认推理只在高斯 future slots 的噪声端 (\tau_v=1) 运行视频专家一次，缓存各层 K/V；附录中把视频去噪步从 1 增到 10，LIBERO-Plus 反而从 73.57% 降到 68.33%。论文支持的是“高噪、一次前向的 future-aware feature 足以提供控制线索”，不是“更清晰的未来画面一定更好”。[Appendix Table A3](https://arxiv.org/pdf/2608.04404)
+最容易误读的一点是：Faster-WAM 的“未来条件”不是一段已经生成好的未来视频。默认推理只在高斯 future slots 的噪声端 $\tau_v=1$ 运行视频专家一次，缓存各层 K/V；附录中把视频去噪步从 1 增到 10，LIBERO-Plus 反而从 73.57% 降到 68.33%。论文支持的是“高噪、一次前向的 future-aware feature 足以提供控制线索”，不是“更清晰的未来画面一定更好”。[Appendix Table A3](https://arxiv.org/pdf/2608.04404)
 
 ## 检索记录
 
@@ -63,7 +63,7 @@ Faster-WAM 认为标准 benchmark 已接近饱和，无法回答 current-only �
 
 ### 1. 三种视觉接口
 
-控制时刻 (t) 的输入为图像 (o_t)、语言 (l)、本体状态 (s_t)，输出 horizon (H) 的动作 chunk：
+控制时刻 $t$ 的输入为图像 $o_t$、语言 $l$、本体状态 $s_t$，输出 horizon $H$ 的动作 chunk：
 
 $$
 A_t=a_{t+1:t+H},
@@ -71,7 +71,7 @@ A_t=a_{t+1:t+H},
 \pi_\theta=p_\theta(A_t\mid s_t,l,R_t^v).
 $$
 
-记 (z_t^0=E_v(o_t)) 为当前帧 latent，(Z_t) 为未来视频 latent。三种 WAM 的差异可以写成：
+记 $z_t^0=E_v(o_t)$ 为当前帧 latent，$Z_t$ 为未来视频 latent。三种 WAM 的差异可以写成：
 
 $$
 R^{v,\mathrm{joint}}_{t,k}
@@ -83,13 +83,13 @@ R^{v,\mathrm{fast}}_t
 =G_v(z_t^0,l).
 $$
 
-Joint-WAM 在每个动作/视频去噪步 (k) 重算随 (Z_t^{(k)}) 演化的视觉表示；Fast-WAM 完全删除未来 slots；Faster-WAM 则在动作积分前建立一次固定但 future-aware 的表示，并在后续动作步复用。[原论文 Eqs. 1–3](https://arxiv.org/pdf/2608.04404)
+Joint-WAM 在每个动作/视频去噪步 $k$ 重算随 $Z_t^{(k)}$ 演化的视觉表示；Fast-WAM 完全删除未来 slots；Faster-WAM 则在动作积分前建立一次固定但 future-aware 的表示，并在后续动作步复用。[原论文 Eqs. 1–3](https://arxiv.org/pdf/2608.04404)
 
 ### 2. One-pass future conditioning
 
-视频与动作都用 flow matching，并取 (\tau=0) 为干净、(\tau=1) 为高斯噪声。默认推理将 future slots 初始化为 (Z_{t,1}=\epsilon_t^v)，与当前干净 anchor (z_t^0) 和语言一起送入 Wan2.2-5B video expert **一次**。虽然 future slots 尚未被重建，视频网络为了估计噪声端的 flow direction，仍需利用场景与任务推断可能的演化方向。
+视频与动作都用 flow matching，并取 $\tau=0$ 为干净、$\tau=1$ 为高斯噪声。默认推理将 future slots 初始化为 $Z_{t,1}=\epsilon_t^v$，与当前干净 anchor $z_t^0$ 和语言一起送入 Wan2.2-5B video expert **一次**。虽然 future slots 尚未被重建，视频网络为了估计噪声端的 flow direction，仍需利用场景与任务推断可能的演化方向。
 
-从视频注意力第 (j) 层保留 key/value：
+从视频注意力第 $j$ 层保留 key/value：
 
 $$
 C^v_{t,\tau_v}
@@ -102,7 +102,7 @@ $$
 
 ### 3. SparseMoT：只稀疏地读取视频
 
-传统 dense MoT 在 (L) 个对齐 stage 的每一层、每个动作 flow step 都做视频—动作交互。SparseMoT 选择：
+传统 dense MoT 在 $L$ 个对齐 stage 的每一层、每个动作 flow step 都做视频—动作交互。SparseMoT 选择：
 
 $$
 \mathcal J=\{j_1,\ldots,j_M\}
@@ -110,7 +110,7 @@ $$
 \qquad j_1<\cdots<j_M.
 $$
 
-在选定层 (j_m)，action query 同时读取融合视频 K/V 与动作自身 K/V：
+在选定层 $j_m$，action query 同时读取融合视频 K/V 与动作自身 K/V：
 
 $$
 \widetilde X^a_{j_m}
@@ -121,7 +121,7 @@ Q^a_{j_m},
 \right).
 $$
 
-未选层仍保留 action self-attention、FFN 和 residual update，只是不再次访问视频。因此 SparseMoT 稀疏的是跨分支通信，而不是删掉动作网络深度。实现采用 30 层、宽度 1024 的 action Transformer，每 4 层交互一次，得到 (M=8) 个读取点。[原论文 Eqs. 5–6、Implementation Details](https://arxiv.org/pdf/2608.04404)
+未选层仍保留 action self-attention、FFN 和 residual update，只是不再次访问视频。因此 SparseMoT 稀疏的是跨分支通信，而不是删掉动作网络深度。实现采用 30 层、宽度 1024 的 action Transformer，每 4 层交互一次，得到 $M=8$ 个读取点。[原论文 Eqs. 5–6、Implementation Details](https://arxiv.org/pdf/2608.04404)
 
 ### 4. Interval KV-Fusion：不增加序列长度的多层汇总
 
@@ -151,7 +151,7 @@ Z_{t,\tau_v}=(1-\tau_v)Z_t+\tau_v\epsilon_t^v,
 A_{t,\tau_a}=(1-\tau_a)A_t+\tau_a\epsilon_t^a.
 $$
 
-视频目标 (u_t^v=\epsilon_t^v-Z_t)，动作目标 (u_t^a=\epsilon_t^a-A_t)。联合损失为：
+视频目标 $u_t^v=\epsilon_t^v-Z_t$，动作目标 $u_t^a=\epsilon_t^a-A_t$。联合损失为：
 
 $$
 \mathcal L=
@@ -165,7 +165,7 @@ W_a^{\mathrm{flow}}(\tau_a)
 \right].
 $$
 
-附录给出 (\lambda_v=\lambda_a=1)，两个 scheduler 都为 1,000 timesteps、shift 5.0。独立采样噪声级使动作专家在训练时接触不同清晰度组合的视觉/动作状态。[原论文 Eqs. 9–11、Table A1](https://arxiv.org/pdf/2608.04404)
+附录给出 $\lambda_v=\lambda_a=1$，两个 scheduler 都为 1,000 timesteps、shift 5.0。独立采样噪声级使动作专家在训练时接触不同清晰度组合的视觉/动作状态。[原论文 Eqs. 9–11、Table A1](https://arxiv.org/pdf/2608.04404)
 
 ### 6. 训练—推理边界
 
@@ -174,7 +174,7 @@ $$
 | 训练 | 1 个当前 + 8 个真实未来 latent 加噪 | 视频/动作联合训练 | 多噪声级未来 K/V |
 | Joint-WAM 推理 | 有，并反复更新 | 每个 denoising step 重跑 | 不断演化的 future features |
 | Fast-WAM 推理 | 无 | 当前帧一次编码 | current-only features |
-| Faster-WAM 推理 | 有，初始化为 Gaussian noise | (\tau_v=1) 只跑一次，不解码 | 固定 future-aware K/V cache |
+| Faster-WAM 推理 | 有，初始化为 Gaussian noise | $\tau_v=1$ 只跑一次，不解码 | 固定 future-aware K/V cache |
 
 “推理期未来条件”与“推理期未来视频生成”必须分开：Faster-WAM 有前者，没有默认意义上的完整后者。
 
@@ -184,7 +184,7 @@ $$
 - **LIBERO**：2 视角拼为 224×448；10 epochs、8 张 A800、global batch 128。
 - **RoboTwin 2.0**：3 视角拼为 384×320；5 epochs、32 张 A800、global batch 1,024；2,500 clean + 25,000 randomized demonstrations。
 - **真机**：双 Piper 6-DoF 机械臂，4 个任务各 400 条示范，共 1,600 条、4.52 小时；5 epochs、32 张 A800、global batch 512。
-- **优化**：BF16、DeepSpeed ZeRO-1、AdamW (betas 0.9/0.95)、learning rate (10^{-4})、weight decay (10^{-2})、5% warmup + cosine decay、gradient clipping 1.0。
+- **优化**：BF16、DeepSpeed ZeRO-1、AdamW (betas 0.9/0.95)、learning rate $10^{-4}$、weight decay $10^{-2}$、5% warmup + cosine decay、gradient clipping 1.0。
 
 ## 实验
 

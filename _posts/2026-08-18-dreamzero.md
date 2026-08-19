@@ -62,7 +62,7 @@ VLA 通常继承 VLM 的静态图文语义，再在机器人数据上增加动�
 
 ### 1. 联合视频—动作分解
 
-在时刻 (l)，模型接收历史观测 (o_{0:l})、语言 (c) 和本体状态 (q_l)，预测未来视频与动作。作者把联合分布写为：
+在时刻 $l$，模型接收历史观测 $o_{0:l}$、语言 $c$ 和本体状态 $q_l$，预测未来视频与动作。作者把联合分布写为：
 
 $$
 \pi_0(o_{l:l+H},a_{l:l+H}\mid o_{0:l},c,q_l)
@@ -74,7 +74,7 @@ $$
 
 ### 2. Chunk-wise 自回归 flow matching
 
-轨迹被切成多个 chunk。第 (k) 个视频 latent 和归一化动作都使用同一噪声时间 (t_k)，论文采用“(t=0) 为高斯噪声、(t=1) 为干净数据”的记号：
+轨迹被切成多个 chunk。第 $k$ 个视频 latent 和归一化动作都使用同一噪声时间 $t_k$，论文采用“$t=0$ 为高斯噪声、$t=1$ 为干净数据”的记号：
 
 $$
 z^k_{t_k}=t_k z^k_1+(1-t_k)z^k_0,
@@ -82,7 +82,7 @@ z^k_{t_k}=t_k z^k_1+(1-t_k)z^k_0,
 a^k_{t_k}=t_k a^k_1+(1-t_k)a^k_0,
 $$
 
-其中 (z^k_0,a^k_0\sim\mathcal N(0,I))，(z^k_1,a^k_1) 是真实视频 latent 与动作。此前的干净 chunk 形成 teacher-forcing 上下文：
+其中 $z^k_0,a^k_0\sim\mathcal N(0,I)$，$z^k_1,a^k_1$ 是真实视频 latent 与动作。此前的干净 chunk 形成 teacher-forcing 上下文：
 
 $$
 \mathcal C_k=\{(z^j_1,a^j_1)\}_{j=1}^{k-1}.
@@ -101,7 +101,7 @@ u_\theta([z^k_{t_k},a^k_{t_k}];\mathcal C_k,c,q_k,t_k)
 \right],
 $$
 
-其中 (v_k=[z^k_1,a^k_1]-[z^k_0,a^k_0])。注意力 mask 让当前 noisy chunk 读取此前 clean chunks；视频采用自回归 chunk 生成，而动作保持闭环 chunk 预测，避免直接把生成误差无限传播到控制。[原论文 Eqs. 1–3、Appendix C](https://arxiv.org/pdf/2602.15922)
+其中 $v_k=[z^k_1,a^k_1]-[z^k_0,a^k_0]$。注意力 mask 让当前 noisy chunk 读取此前 clean chunks；视频采用自回归 chunk 生成，而动作保持闭环 chunk 预测，避免直接把生成误差无限传播到控制。[原论文 Eqs. 1–3、Appendix C](https://arxiv.org/pdf/2602.15922)
 
 ### 3. 训练期世界预测与推理期未来条件
 
@@ -115,14 +115,14 @@ $$
 
 ### 4. DreamZero-Flash 与系统优化
 
-标准训练让视频和动作共享均匀采样的 (t)。少步推理时，动作已接近干净而视频仍很 noisy，产生训练—推理错配。Flash 将视频时间改为：
+标准训练让视频和动作共享均匀采样的 $t$。少步推理时，动作已接近干净而视频仍很 noisy，产生训练—推理错配。Flash 将视频时间改为：
 
 $$
 t_k^{\text{video}}=1-\eta,
 \qquad \eta\sim\operatorname{Beta}(7,1),
 $$
 
-使 (\mathbb E[t_k^{\text{video}}]=0.125)，即训练时大部分视频条件接近噪声；动作时间仍均匀采样。模型因而学会从 noisy visual context 直接恢复动作。系统侧还包括：双 GPU 并行 CFG、按相邻速度余弦相似度复用 DiT 输出、`torch.compile`/CUDA Graph、cuDNN attention、GPU scheduler，以及 GB200 上的 NVFP4/FP8 混合量化。动作执行与推理异步，48 步 action chunk 以 30 Hz 执行，为推理留出重叠窗口。[原论文 §§3.2.2–3.2.6](https://arxiv.org/pdf/2602.15922)
+使 $\mathbb E[t_k^{\text{video}}]=0.125$，即训练时大部分视频条件接近噪声；动作时间仍均匀采样。模型因而学会从 noisy visual context 直接恢复动作。系统侧还包括：双 GPU 并行 CFG、按相邻速度余弦相似度复用 DiT 输出、`torch.compile`/CUDA Graph、cuDNN attention、GPU scheduler，以及 GB200 上的 NVFP4/FP8 混合量化。动作执行与推理异步，48 步 action chunk 以 30 Hz 执行，为推理留出重叠窗口。[原论文 §§3.2.2–3.2.6](https://arxiv.org/pdf/2602.15922)
 
 ### 5. 数据与训练
 
@@ -150,7 +150,7 @@ $$
 ## 主要发现
 
 - **异质数据学习**：AgiBot 已见任务中，DreamZero 为 62.2% 平均任务进度；最强预训练 VLA 对照为 27.4%，from-scratch VLA 接近零。DROID 已见任务中，DreamZero 同样高于公开/内部 VLA 对照。[Figure 8](https://arxiv.org/pdf/2602.15922)
-- **零样本未见动作**：AgiBot 平均进度 39.5%，最强预训练 VLA 为 16.3%；DROID 上 DreamZero 为 49% task progress / 22.5% success，而 GR00T N1.6 为 31% / 12.5%，(\pi_{0.5}) 为 33% / 7.5%。
+- **零样本未见动作**：AgiBot 平均进度 39.5%，最强预训练 VLA 为 16.3%；DROID 上 DreamZero 为 49% task progress / 22.5% success，而 GR00T N1.6 为 31% / 12.5%，$\pi_{0.5}$ 为 33% / 7.5%。
 - **跨具身无动作视频有效**：9 个未见任务由 38.3%±7.6% 提升到人类视频的 54.3%±10.4%，以及 YAM 视频的 55.4%±9.5%；后两者相对提升均超过 42%。
 - **数据多样性与规模均重要**：同为 500 h，异质数据的消融进度为 50%±6.3%，重复数据为 33%±4.2%；14B 为 50%±6.3%，5B 为 21%±4.2%。作者观察到小模型的视觉幻觉会直接变成错误动作。
 - **AR 的优势主要在动态质量和速度**：AR 与双向模型在小规模 PnP 消融中都为 50%，但 AR 动作更平滑，并因 KV cache 快 3–4 倍；这一结果没有证明 AR 在成功率上显著更优。

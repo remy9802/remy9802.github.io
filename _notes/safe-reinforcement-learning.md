@@ -1,11 +1,15 @@
 ---
-title: "综述｜安全强化学习：从约束优化、风险控制到运行时防护"
+title: "安全强化学习：从约束优化、风险控制到运行时防护"
 date: 2026-08-18
-permalink: /posts/safe-reinforcement-learning-review/
-tags: [literature-note, reinforcement-learning, safe-rl, cmdp, cpo, risk-sensitive-rl, shielding, offline-rl]
-note_type: topic-synthesis
-literature_topics:
+permalink: /notes/safe-reinforcement-learning/
+redirect_from:
+  - /posts/safe-reinforcement-learning-review/
+note_kind: learning
+note_topics:
   - reinforcement-learning
+  - machine-learning
+  - robotics
+tags: [safe-rl, cmdp, cpo, risk-sensitive-rl, shielding, offline-rl]
 excerpt: "从安全语义、算法机制和证据边界出发，梳理 CMDP、CPO、PID-Lagrangian、CVaR、Lyapunov、Shielding、Recovery RL 与离线安全改进。"
 ---
 

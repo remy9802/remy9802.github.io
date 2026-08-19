@@ -58,42 +58,42 @@ GPT-1 的答案刻意简单：把语言建模作为统一预训练目标，把 p
 
 ### 1. 无监督生成式预训练
 
-对无标签 token 序列 \(U=\{u_1,\ldots,u_n\}\)，模型最大化固定上下文窗口内的对数似然：
+对无标签 token 序列 $U=\{u_1,\ldots,u_n\}$，模型最大化固定上下文窗口内的对数似然：
 
-\[
+$$
 L_1(U)=\sum_i \log P(u_i\mid u_{i-k},\ldots,u_{i-1};\Theta).
-\]
+$$
 
 语言模型是 12 层 decoder-only Transformer：masked multi-head self-attention 保证每个位置只读取左侧上下文。其隐藏状态为
 
-\[
+$$
 h_0=UW_e+W_p,\qquad
 h_l=\operatorname{TransformerBlock}(h_{l-1}),
-\]
+$$
 
-\[
+$$
 P(u)=\operatorname{softmax}(h_nW_e^\top).
-\]
+$$
 
-模型使用 \(d_{model}=768\)、12 heads、FFN 内层 3072、learned positional embedding、GELU 和 40k-merge BPE。它不是原 Transformer 的完整 encoder–decoder，而是只保留 causal decoder stack。
+模型使用 $d_{model}=768$、12 heads、FFN 内层 3072、learned positional embedding、GELU 和 40k-merge BPE。它不是原 Transformer 的完整 encoder–decoder，而是只保留 causal decoder stack。
 
 ### 2. 判别式微调与辅助目标
 
-监督样本由 token 序列 \(x_1,\ldots,x_m\) 和标签 \(y\) 构成。最后 token 的顶层表示 \(h_l^m\) 接线性分类器：
+监督样本由 token 序列 $x_1,\ldots,x_m$ 和标签 $y$ 构成。最后 token 的顶层表示 $h_l^m$ 接线性分类器：
 
-\[
+$$
 P(y\mid x_1,\ldots,x_m)=\operatorname{softmax}(h_l^mW_y),
-\]
+$$
 
-\[
+$$
 L_2(C)=\sum_{(x,y)}\log P(y\mid x_1,\ldots,x_m).
-\]
+$$
 
 部分实验在微调时联合优化
 
-\[
+$$
 L_3(C)=L_2(C)+\lambda L_1(C),\qquad \lambda=0.5,
-\]
+$$
 
 以维持语言建模能力并充当辅助正则。表 5 表明该辅助项并非普遍增益：八项平均分 w/o aux LM 为 75.0，略高于 full 的 74.7；它主要对较大 NLI/QQP 数据有帮助。
 
@@ -109,8 +109,8 @@ L_3(C)=L_2(C)+\lambda L_1(C),\qquad \lambda=0.5,
 ### 4. 数据与训练
 
 - **预训练数据**：BooksCorpus，超过 7000 本未出版书籍，约 5GB；选择理由是包含较长连续文本。
-- **预训练**：512-token 连续序列、batch 64、100 epochs；Adam，峰值学习率 \(2.5\times10^{-4}\)，2000-step warmup 后 cosine decay；dropout 0.1，权重衰减 0.01。
-- **微调**：多数任务 3 epochs、batch 32、学习率 \(6.25\times10^{-5}\)，0.2% warmup，linear decay。
+- **预训练**：512-token 连续序列、batch 64、100 epochs；Adam，峰值学习率 $2.5\times10^{-4}$，2000-step warmup 后 cosine decay；dropout 0.1，权重衰减 0.01。
+- **微调**：多数任务 3 epochs、batch 32、学习率 $6.25\times10^{-5}$，0.2% warmup，linear decay。
 - **计算**：OpenAI 官方页报告约 8×P600 训练 30 天、总计 0.96 PF-days；论文正文未给独立多次训练成本分布。[官方 compute 说明](https://openai.com/index/language-unsupervised/)
 
 ### 5. 推理

@@ -71,17 +71,17 @@ Tokenizer 从 `tiktoken` 的 `cl100k_base` 出发，扩入常用中文字符/词
 
 ### 3. 优化与长上下文
 
-预训练上下文为 2,048，目标是 next-token prediction；AdamW 采用 \(\beta_1=0.9,\beta_2=0.95,\epsilon=10^{-8}\)，4M-token batch、cosine decay 到峰值的 10%，BF16 混合精度并使用 FlashAttention。
+预训练上下文为 2,048，目标是 next-token prediction；AdamW 采用 $\beta_1=0.9,\beta_2=0.95,\epsilon=10^{-8}$，4M-token batch、cosine decay 到峰值的 10%，BF16 混合精度并使用 FlashAttention。
 
 长上下文主要在**推理阶段**组合 dynamic NTK-aware RoPE interpolation、LogN-Scaling 与 layer-wise window attention。较低层用较短窗口、较高层用较长窗口。表 3 在 arXiv 文本上展示 16K 范围的 perplexity 改善；这不等同于训练时已具备 16K 原生上下文，也不等同于长文多跳理解。
 
 ### 4. SFT 与 RLHF
 
-SFT 使用 ChatML 区分 system/user/assistant，只在 assistant token 上计算 next-token loss。序列长 2,048、batch 128、训练 4,000 steps；学习率在前 1,430 steps 升至 \(2\times10^{-6}\)，weight decay 0.1、dropout 0.1、gradient clipping 1.0。数据覆盖自然对话、任务、工具、agent 与暴力/偏见/色情等安全主题，但数量与混合比例没有公开。
+SFT 使用 ChatML 区分 system/user/assistant，只在 assistant token 上计算 next-token loss。序列长 2,048、batch 128、训练 4,000 steps；学习率在前 1,430 steps 升至 $2\times10^{-6}$，weight decay 0.1、dropout 0.1、gradient clipping 1.0。数据覆盖自然对话、任务、工具、agent 与暴力/偏见/色情等安全主题，但数量与混合比例没有公开。
 
-RLHF 先做 preference model pretraining（PMP），再用约 6,600 个细粒度标签平衡 prompt 的多样性与难度，收集不同 Qwen checkpoint/采样策略的多响应，由人工排序训练同尺度 reward model。RM 在结束 token 上池化标量；学习率 \(3\times10^{-6}\)、batch 64、长度 2,048、1 epoch。
+RLHF 先做 preference model pretraining（PMP），再用约 6,600 个细粒度标签平衡 prompt 的多样性与难度，收集不同 Qwen checkpoint/采样策略的多响应，由人工排序训练同尺度 reward model。RM 在结束 token 上池化标量；学习率 $3\times10^{-6}$、batch 64、长度 2,048、1 epoch。
 
-PPO 同时维护 policy、value、reference、reward 四个模型。训练前先单独更新 value model 50 steps；每个 query 同时采样两个回答，KL 系数 0.04，reward 按运行均值归一化；policy/value 学习率分别为 \(1\times10^{-6}\) 与 \(5\times10^{-6}\)，value clip 为 0.15。作者还混入 pretraining gradient 以缓解 alignment tax，但没有公开精确混合比例。
+PPO 同时维护 policy、value、reference、reward 四个模型。训练前先单独更新 value model 50 steps；每个 query 同时采样两个回答，KL 系数 0.04，reward 按运行均值归一化；policy/value 学习率分别为 $1\times10^{-6}$ 与 $5\times10^{-6}$，value clip 为 0.15。作者还混入 pretraining gradient 以缓解 alignment tax，但没有公开精确混合比例。
 
 ### 5. 专门化与 agent
 

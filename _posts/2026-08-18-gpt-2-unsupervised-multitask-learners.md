@@ -41,11 +41,11 @@ GPT-2 把 GPT-1 的“预训练后逐任务微调”推进为“同一个语言�
 
 GPT-1 已证明大规模无标签预训练能提升监督任务，却仍为每个任务准备标签、微调权重和输出头。GPT-2 提出更激进的假设：互联网文本本身包含大量“自然发生的示范”，例如问题后跟答案、英文后跟法文、文章后跟摘要。若模型充分优化网页文本分布
 
-\[
+$$
 p(x)=\prod_{i=1}^{n}p(s_i\mid s_1,\ldots,s_{i-1}),
-\]
+$$
 
-那么为了更好预测文本，它可能隐式学习 \(p(\text{output}\mid\text{input},\text{task})\)。任务通过语言上下文指定，而不必设计新网络。[原论文 §1–2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)
+那么为了更好预测文本，它可能隐式学习 $p(\text{output}\mid\text{input},\text{task})$。任务通过语言上下文指定，而不必设计新网络。[原论文 §1–2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)
 
 “unsupervised multitask learner”因此是一个经验性解释：训练目标仍只有 next-token likelihood，并没有显式任务标签；多任务结构来自语料中的隐式规律。它不是说训练数据无人创造或无偏，也不是今天严格意义的自监督/无监督术语裁决。
 
@@ -75,9 +75,9 @@ p(x)=\prod_{i=1}^{n}p(s_i\mid s_1,\ldots,s_{i-1}),
 GPT-2 仍是 causal decoder-only Transformer，最大化前缀条件下下一 token 的对数似然。相对 GPT-1 的主要结构/训练改动包括：
 
 - LayerNorm 移到每个 sub-block 输入侧，即后续常说的 Pre-LN；最终 self-attention block 后再加一个 LayerNorm。
-- residual 分支初始化按层数以 \(1/\sqrt{N}\) 缩放。
+- residual 分支初始化按层数以 $1/\sqrt{N}$ 缩放。
 - context 从 512 增至 1024 token；batch size 512。
-- 四档模型从 12 层、\(d_{model}=768\) 扩至 48 层、\(d_{model}=1600\)。
+- 四档模型从 12 层、$d_{model}=768$ 扩至 48 层、$d_{model}=1600$。
 
 论文没有报告完整 optimizer、学习率 schedule、训练 token 数、训练 steps、硬件或总 FLOPs；这些空白不能用第三方实践补成“原论文方法”。
 
@@ -86,7 +86,7 @@ GPT-2 仍是 causal decoder-only Transformer，最大化前缀条件下下一 to
 模型参数不针对 benchmark 更新，但每个任务仍需人为规定上下文和评分：
 
 - **CoQA**：输入文档、对话历史与 `A:`，greedy decode 答案。
-- **摘要**：文章后加 `TL;DR:`，top-\(k=2\) 采样 100 token，取前三句。
+- **摘要**：文章后加 `TL;DR:`，top-$k=2$ 采样 100 token，取前三句。
 - **翻译**：上下文放若干 `English sentence = French sentence` 示例，再生成等号右侧。
 - **问答**：用示例建立短答案格式，再对生成答案做 exact match。
 - **cloze / Winograd**：比较候选 continuation 的 LM 概率。

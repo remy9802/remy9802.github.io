@@ -24,7 +24,7 @@ literature_topics: [llm]
 
 ## 核心结论
 
-GPT-3 最强的论文级结论是一个 **规模—上下文学习交互**：125M 到 175B 的八档自回归 LM 均只做 next-token pretraining；推理时以自然语言任务描述和 \(K\) 个示例放入 2048-token context，不更新参数。zero-shot 通常随规模平滑改善，而 few-shot 相对提升往往更快，说明大模型更能利用上下文示范。[原论文 Figure 1.1 与 §2](https://papers.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf)
+GPT-3 最强的论文级结论是一个 **规模—上下文学习交互**：125M 到 175B 的八档自回归 LM 均只做 next-token pretraining；推理时以自然语言任务描述和 $K$ 个示例放入 2048-token context，不更新参数。zero-shot 通常随规模平滑改善，而 few-shot 相对提升往往更快，说明大模型更能利用上下文示范。[原论文 Figure 1.1 与 §2](https://papers.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf)
 
 这一结论不是“175B 已经普遍超过微调”：TriviaQA few-shot 71.2 很强，但 NaturalQuestions 29.9 低于闭卷 T5-11B+SSM 的 36.6；DROP 36.5 远低于微调 SOTA 89.1。模型还存在污染、提示敏感、重复、事实错误、偏见与巨大训练成本。GPT-3 证明 in-context learning 是可规模化现象，却没有解释它的内部算法或提供可独立复现的训练系统。
 
@@ -56,7 +56,7 @@ GPT-2 已观察到无需梯度更新的 task conditioning，但大多数任务�
 
 - **Zero-shot**：只给自然语言任务描述/调用，不给已标注示例。
 - **One-shot**：给一个 input–output 示例。
-- **Few-shot**：给 \(K\) 个示例，通常 \(K=10\sim100\)，受 2048-token context 限制。
+- **Few-shot**：给 $K$ 个示例，通常 $K=10\sim100$，受 2048-token context 限制。
 - **Fine-tuning**：更新模型权重；本文把它留给未来研究，不训练 GPT-3 的任务特定 FT 版本。
 
 对每个测试样本，few-shot 示例从该任务训练集随机抽取并拼入上下文；没有训练集的 LAMBADA/StoryCloze 从 dev 抽示例、在 test 评估。自由生成任务多使用 beam size 4、length penalty 0.6。模型间虽无任务梯度更新，但 prompt 格式、示例抽样和答案规范化仍是实验协议的一部分。
@@ -65,13 +65,13 @@ GPT-2 已观察到无需梯度更新的 task conditioning，但大多数任务�
 
 GPT-3 最大化标准 causal likelihood：
 
-\[
+$$
 \mathcal L(\theta)=-\sum_t\log p_\theta(x_t\mid x_{<t}).
-\]
+$$
 
 架构沿用 GPT-2 的 decoder-only、Pre-LN、可逆 byte-level BPE 与 residual 初始化，但各层交替采用 dense attention 和 locally banded sparse attention。八档模型为 125M、350M、760M、1.3B、2.7B、6.7B、13B、175B。
 
-最大模型配置：96 layers，\(d_{model}=12288\)，96 heads，每头 128 维，FFN 为 \(4d_{model}\)，batch 3.2M tokens，峰值学习率 \(0.6\times10^{-4}\)。所有模型 context 2048，并各训练 300B tokens。[arXiv Table 2.1](https://arxiv.org/pdf/2005.14165)
+最大模型配置：96 layers，$d_{model}=12288$，96 heads，每头 128 维，FFN 为 $4d_{model}$，batch 3.2M tokens，峰值学习率 $0.6\times10^{-4}$。所有模型 context 2048，并各训练 300B tokens。[arXiv Table 2.1](https://arxiv.org/pdf/2005.14165)
 
 ### 3. 数据构造
 
@@ -89,9 +89,9 @@ GPT-3 最大化标准 causal likelihood：
 
 ### 4. 优化与计算
 
-Adam 使用 \(\beta_1=0.9,\beta_2=0.95,\varepsilon=10^{-8}\)，global gradient norm clip 1.0，weight decay 0.1；前 375M tokens 线性 warmup，至 260B tokens cosine decay 到初始学习率的 10%，之后保持。batch 从 32k tokens 在最初 4–12B tokens 逐渐增至目标值。短文档打包到 2048-token 序列，以 end-of-text 分隔而不加额外文档 mask。
+Adam 使用 $\beta_1=0.9,\beta_2=0.95,\varepsilon=10^{-8}$，global gradient norm clip 1.0，weight decay 0.1；前 375M tokens 线性 warmup，至 260B tokens cosine decay 到初始学习率的 10%，之后保持。batch 从 32k tokens 在最初 4–12B tokens 逐渐增至目标值。短文档打包到 2048-token 序列，以 end-of-text 分隔而不加额外文档 mask。
 
-补充材料估计 175B 训练为 \(3.14\times10^{23}\) FLOPs，约 3640 PF-days；这是按每 token/参数近似计算，不是实测全系统能耗。论文只说在 V100 高带宽集群上进行宽度与深度并行，没有公开完整集群规模、效率、训练代码或 checkpoint。
+补充材料估计 175B 训练为 $3.14\times10^{23}$ FLOPs，约 3640 PF-days；这是按每 token/参数近似计算，不是实测全系统能耗。论文只说在 V100 高带宽集群上进行宽度与深度并行，没有公开完整集群规模、效率、训练代码或 checkpoint。
 
 ### 5. 训练—推理边界
 
@@ -101,7 +101,7 @@ few-shot 推理没有反向传播：示例只改变当前 sequence activations �
 
 ![GPT-3 随规模与上下文示例数增长的性能](/images/literature-notes/gpt-3-few-shot-learners/in-context-scaling.png)
 
-*图 1｜左/中为 SuperGLUE 随参数量与 \(K\) 变化，右为 42 个 accuracy benchmark 的聚合曲线；few-shot 与 zero-shot 的差距总体随规模扩大。注意 GPT-3 为 dev、虚线基线多为 test，不能直接作严格同协议 SOTA 比较。来源：原论文 Figure 1.1，NeurIPS 正文物理页 2。[原图](https://papers.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf)*
+*图 1｜左/中为 SuperGLUE 随参数量与 $K$ 变化，右为 42 个 accuracy benchmark 的聚合曲线；few-shot 与 zero-shot 的差距总体随规模扩大。注意 GPT-3 为 dev、虚线基线多为 test，不能直接作严格同协议 SOTA 比较。来源：原论文 Figure 1.1，NeurIPS 正文物理页 2。[原图](https://papers.neurips.cc/paper_files/paper/2020/file/1457c0d6bfcb4967418bfb8ac142f64a-Paper.pdf)*
 
 ### 上下文学习与规模
 

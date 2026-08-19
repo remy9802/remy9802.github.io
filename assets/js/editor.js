@@ -15,6 +15,7 @@
   var toast = document.getElementById("studio-toast");
   var importInput = document.getElementById("import-file");
   var saveTimer;
+  var mathTimer;
   var toastTimer;
 
   var starter = {
@@ -88,11 +89,17 @@
   }
 
   function inlineMarkdown(value) {
-    var codeTokens = [];
-    var text = escapeHtml(value).replace(/`([^`]+)`/g, function (_, code) {
-      var token = "\u0000CODE" + codeTokens.length + "\u0000";
-      codeTokens.push("<code>" + code + "</code>");
+    var protectedTokens = [];
+    function protect(content) {
+      var token = "\u0000PROTECTED" + protectedTokens.length + "\u0000";
+      protectedTokens.push(content);
       return token;
+    }
+
+    var text = escapeHtml(value).replace(/`([^`]+)`/g, function (_, code) {
+      return protect("<code>" + code + "</code>");
+    }).replace(/\$\$[^$]+\$\$|\$[^$\n]+\$/g, function (math) {
+      return protect(math);
     });
 
     text = text
@@ -105,10 +112,32 @@
       .replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>")
       .replace(/(^|[^_])_([^_\n]+)_/g, "$1<em>$2</em>");
 
-    codeTokens.forEach(function (code, index) {
-      text = text.replace("\u0000CODE" + index + "\u0000", code);
+    protectedTokens.forEach(function (content, index) {
+      text = text.replace("\u0000PROTECTED" + index + "\u0000", content);
     });
     return text;
+  }
+
+  function clearPreviewMath() {
+    if (window.MathJax && typeof window.MathJax.typesetClear === "function") {
+      window.MathJax.typesetClear([preview]);
+    }
+  }
+
+  function queueMathTypeset() {
+    window.clearTimeout(mathTimer);
+    mathTimer = window.setTimeout(function () {
+      if (!window.MathJax ||
+          !window.MathJax.startup ||
+          !window.MathJax.startup.promise ||
+          typeof window.MathJax.typesetPromise !== "function") return;
+
+      window.MathJax.startup.promise
+        .then(function () { return window.MathJax.typesetPromise([preview]); })
+        .catch(function () {
+          // Keep the Markdown editor usable if an incomplete formula cannot be typeset yet.
+        });
+    }, 120);
   }
 
   function markdownToHtml(markdown) {
@@ -223,11 +252,13 @@
     var tagLabel = tags.length ? tags.join(" · ") : "未分类";
 
     stats.textContent = charCount + " 字 · 约 " + minutes + " 分钟";
+    clearPreviewMath();
     preview.innerHTML =
       '<p class="preview-kicker">' + escapeHtml(tagLabel) + "</p>" +
       '<h1 class="preview-title">' + escapeHtml(draft.title || "无标题文章") + "</h1>" +
       '<p class="preview-meta">' + escapeHtml(draft.date) + " · 预计阅读 " + minutes + " 分钟</p>" +
       (bodyText ? markdownToHtml(draft.body) : '<div class="preview-empty"><p>开始输入后，预览会出现在这里。</p></div>');
+    queueMathTypeset();
   }
 
   function onEdit() {

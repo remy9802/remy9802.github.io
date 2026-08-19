@@ -58,7 +58,7 @@ critic-based VLA-RL 用 value 或 advantage 把稀疏成功奖励转化为更密
 
 ### 1. 历史条件的潜在状态
 
-对最近 (K) 个观测，每帧先独立编码：
+对最近 $K$ 个观测，每帧先独立编码：
 
 $$
 z_{t-k}=\operatorname{enc}_\epsilon(o_{t-k}),
@@ -72,7 +72,7 @@ h_t=\operatorname{Tr}_\phi
 (\operatorname{XAttn}(z_{t-K+1:t},u_\ell)).
 $$
 
-该 (h_t) 被视作紧凑、可更新的 predictive state，而不是只为当前回报拟合的静态特征。[原文 §3.2](https://arxiv.org/pdf/2607.29613)
+该 $h_t$ 被视作紧凑、可更新的 predictive state，而不是只为当前回报拟合的静态特征。[原文 §3.2](https://arxiv.org/pdf/2607.29613)
 
 ### 2. value 与动作条件世界预测双头
 
@@ -99,7 +99,7 @@ $$
 \lVert\hat z_{t+1}-z_{t+1}\rVert_2^2.
 $$
 
-为防止 joint embedding 塌缩，离线/真机版本还加入 SIGReg，使随机一维投影接近各向同性 Gaussian。value target 使用成功终点 0、失败终点 (-C_{\mathrm{fail}})、其余每步 (-1) 的折扣 return，再 min–max 到 ([-1,1])：
+为防止 joint embedding 塌缩，离线/真机版本还加入 SIGReg，使随机一维投影接近各向同性 Gaussian。value target 使用成功终点 0、失败终点 $-C_{\mathrm{fail}}$、其余每步 $-1$ 的折扣 return，再 min–max 到 $[-1,1]$：
 
 $$
 \mathcal L=
@@ -164,7 +164,7 @@ WCM 在七项任务均高于对应 Gemma-critic AWR/RECAP。例如 OpenVLA-OFT �
 1. **世界模型可以服务 critic，而不必直接生成动作。** WCM 的预测头只在训练时塑造 value representation。
 2. **历史输入与历史监督是两件事。** 多帧架构若只有 scalar return，可能仍忽略动力学；下一 latent 提供更密的跨时间约束。
 3. **收益主要体现在 OOD 与接触进度。** 强 IND baseline 上绝对提升有限，分布变化和部分可观测任务更明显。
-4. **短历史优于盲目加长。** 本文平均最优 (K=3)，说明时序窗口也有容量、噪声和优化折中。
+4. **短历史优于盲目加长。** 本文平均最优 $K=3$，说明时序窗口也有容量、噪声和优化折中。
 5. **WCM 是 critic 插件，不是独立 RL 算法。** 主结果仍依赖 PPO、Flow-SDE、AWR 或 RECAP 的数据与 policy update。
 
 ## 结论

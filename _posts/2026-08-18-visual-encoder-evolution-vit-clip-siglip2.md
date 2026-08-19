@@ -156,7 +156,7 @@ s_{ij}=t x_i^\top y_j+b,
 =-\frac1B\sum_{i,j}\log\sigma(z_{ij}s_{ij}).
 $$
 
-匹配 pair 的 (z_{ij}=+1)，其余为 (-1)。初始 bias (b=-10) 用来抵消负例数量远多于正例的先验。由于每项彼此独立，设备可逐块累计，不必对整个 batch 共同 softmax；但 (B^2) 个组合依然存在。[SigLIP §3](https://arxiv.org/pdf/2303.15343)
+匹配 pair 的 $z_{ij}=+1$，其余为 $-1$。初始 bias $b=-10$ 用来抵消负例数量远多于正例的先验。由于每项彼此独立，设备可逐块累计，不必对整个 batch 共同 softmax；但 $B^2$ 个组合依然存在。[SigLIP §3](https://arxiv.org/pdf/2303.15343)
 
 ### 六、SigLIP 2：训练时增加局部监督，推理时仍保留双塔
 
