@@ -22,6 +22,10 @@
   label: 具身
   description: 具身智能、机器人操作、导航与环境交互
 
+- id: embodied-agent
+  label: 具身 Agent
+  description: 基于 LLM/VLM 的任务规划、代码策略、工具与技能调用、环境反馈、记忆和自主执行
+
 - id: vln
   label: VLN
   description: 视觉语言导航、语言条件路径规划、连续环境控制与导航世界模型

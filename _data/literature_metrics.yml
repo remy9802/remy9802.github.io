@@ -3,8 +3,8 @@
 # citation_count_as_of 是默认日期；较晚补录的论文可在各自条目中覆盖。
 citation_source: "Semantic Scholar"
 citation_count_as_of: "2026-08-18"
-paper_count: 69
-paper_year_coverage: 69
+paper_count: 79
+paper_year_coverage: 79
 citation_count_coverage: 61
 papers:
   attention-is-all-you-need:
@@ -342,3 +342,23 @@ papers:
     citation_count_as_of: "2026-08-19"
     citation_source_id: "88892e6d65be7c61f6e9ae889ea48c1de1678e48"
     citation_url: "https://www.semanticscholar.org/paper/88892e6d65be7c61f6e9ae889ea48c1de1678e48"
+  saycan:
+    paper_year: 2023
+  code-as-policies:
+    paper_year: 2023
+  progprompt:
+    paper_year: 2023
+  inner-monologue:
+    paper_year: 2023
+  voxposer:
+    paper_year: 2023
+  rekep:
+    paper_year: 2025
+  reliable-code-as-policies:
+    paper_year: 2025
+  ellmer:
+    paper_year: 2025
+  roboclaw:
+    paper_year: 2026
+  llamar:
+    paper_year: 2024
